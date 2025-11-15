@@ -5,10 +5,16 @@ public class FirstPersonController : MonoBehaviour
     [Header("Movement Speeds")]
     [SerializeField] private float walkSpeed;
     [SerializeField] private float sprintMultiplier;
+    [SerializeField] private float crouchMultiplier;
 
     [Header("Jump Parameters")]
     [SerializeField] private float jumpForce;
     [SerializeField] private float gravityMultiplier;
+
+    [Header("Crouch Parameters")] 
+    [SerializeField] private float defaultHeight = 2.0f; 
+    [SerializeField] private float crouchHeight = 1.0f; 
+    [SerializeField] private float crouchSmoothTime = 0.1f;
 
     [Header("Look Parameters")]
     [SerializeField] private float mouseSensitivity;
@@ -21,18 +27,25 @@ public class FirstPersonController : MonoBehaviour
 
     private Vector3 currentMovement;
     private float verticalRotation;
-    private float currentSpeed => walkSpeed * (playerInputHandler.SprintTriggered ? sprintMultiplier : 1);
+    private float targetHeight;
+    private float heightVelocity;
+    private bool isCrouching = false;
+
+    private float currentSpeed => walkSpeed * (playerInputHandler.SprintTriggered && !isCrouching ? sprintMultiplier : (isCrouching ? crouchMultiplier : 1));
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        targetHeight = defaultHeight;
     }
 
     void Update()
     {
+        HandleCrouching();
         HandleMovement();
         HandleRotation();
+        HandleJumping();
     }
 
     private Vector3 CalculateWorldDirection()
@@ -49,7 +62,7 @@ public class FirstPersonController : MonoBehaviour
             currentMovement.y = -0.5f;
 
 
-            if (playerInputHandler.JumpTriggered)
+            if (playerInputHandler.JumpTriggered && !isCrouching)
             {
                 currentMovement.y = jumpForce;
             }
@@ -60,14 +73,41 @@ public class FirstPersonController : MonoBehaviour
         }
     }
 
+    private void HandleCrouching() 
+    {
+        if (playerInputHandler.CrouchTriggered)
+        {
+            targetHeight = crouchHeight;
+            isCrouching = true;
+        }
+        else
+        {
+            if (!CanStandUp())
+            {
+                targetHeight = crouchHeight;
+                isCrouching = true;
+            }
+            else
+            {
+                targetHeight = defaultHeight;
+                isCrouching = false;
+            }
+        }
+
+        float newHeight = targetHeight;
+        characterController.height = newHeight;
+    }
+
+    private bool CanStandUp()
+    {
+        return true; 
+    }
 
     private void HandleMovement()
     {
         Vector3 worldDirection = CalculateWorldDirection();
         currentMovement.x = worldDirection.x * currentSpeed;
         currentMovement.z = worldDirection.z * currentSpeed;
-
-        HandleJumping();
         characterController.Move(currentMovement * Time.deltaTime);
     }
 
