@@ -65,7 +65,7 @@ public class FirstPersonController : MonoBehaviour
         {
             currentMovement.y = -0.5f;  // Keeps controller grounded
 
-            if (playerInputHandler.JumpTriggered && !isCrouching)
+            if (playerInputHandler.JumpTriggered)
             {
                 currentMovement.y = jumpForce;  // Apply jump
             }
@@ -99,13 +99,33 @@ public class FirstPersonController : MonoBehaviour
             }
         }
 
-        characterController.height = targetHeight;
+        // Smoothly interpolate the controller height
+        characterController.height = Mathf.SmoothDamp(
+            characterController.height,
+            targetHeight,
+            ref heightVelocity,
+            crouchSmoothTime
+        );
     }
 
     private bool CanStandUp()
     {
-        // Placeholder for future ceiling check
-        return true;
+        float radius = characterController.radius;
+        float standHeight = defaultHeight;
+
+        // Bottom and top of the capsule if standing
+        Vector3 bottom = transform.position + Vector3.up * radius;
+        Vector3 top = transform.position + Vector3.up * (standHeight - radius);
+
+        // Check for obstacles above using OverlapCapsule
+        Collider[] hits = Physics.OverlapCapsule(bottom, top, radius, ~0, QueryTriggerInteraction.Ignore);
+        foreach (var hit in hits)
+        {
+            if (hit != characterController)
+                return false; // Something is blocking the space above
+        }
+
+        return true; // Nothing blocking, safe to stand
     }
 
     private void HandleMovement()

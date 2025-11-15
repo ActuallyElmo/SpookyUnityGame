@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class PlayerHidingManager : MonoBehaviour
 {
-    public bool isCompletlyHidden;     // True when player is in a full hiding spot
+    public bool isCompletelyHidden;     // True when player is in a full hiding spot
     public bool isPartiallyHidden;     // True when player is in a partial hiding spot
 
     void Start()
     {
         isPartiallyHidden = false;     // Initialize hiding states
-        isCompletlyHidden = false;
+        isCompletelyHidden = false;
     }
 
     public void SetHiddenStatus(bool isCompletlyHidden)
     {
-        this.isCompletlyHidden = isCompletlyHidden;   // Update full hiding status
+        this.isCompletelyHidden = isCompletlyHidden;   // Update full hiding status
     }
 
     public void SetPartiallyHiddenStatus(bool isPartiallyHidden)
