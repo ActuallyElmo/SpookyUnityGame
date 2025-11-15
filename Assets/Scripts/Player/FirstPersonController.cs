@@ -3,41 +3,44 @@ using UnityEngine;
 public class FirstPersonController : MonoBehaviour
 {
     [Header("Movement Speeds")]
-    [SerializeField] private float walkSpeed;
-    [SerializeField] private float sprintMultiplier;
-    [SerializeField] private float crouchMultiplier;
+    [SerializeField] private float walkSpeed;              // Base walking speed
+    [SerializeField] private float sprintMultiplier;       // Speed multiplier when sprinting
+    [SerializeField] private float crouchMultiplier;       // Speed multiplier when crouched
 
     [Header("Jump Parameters")]
-    [SerializeField] private float jumpForce;
-    [SerializeField] private float gravityMultiplier;
+    [SerializeField] private float jumpForce;              // Initial jump force
+    [SerializeField] private float gravityMultiplier;      // Extra gravity applied while falling
 
-    [Header("Crouch Parameters")] 
-    [SerializeField] private float defaultHeight = 2.0f; 
-    [SerializeField] private float crouchHeight = 1.0f; 
-    [SerializeField] private float crouchSmoothTime = 0.1f;
+    [Header("Crouch Parameters")]
+    [SerializeField] private float defaultHeight;          // Controller height while standing
+    [SerializeField] private float crouchHeight;           // Controller height while crouching
+    [SerializeField] private float crouchSmoothTime;       // Reserved for smooth transitions
 
     [Header("Look Parameters")]
-    [SerializeField] private float mouseSensitivity;
-    [SerializeField] private float upDownLookRange;
+    [SerializeField] private float mouseSensitivity;       // Mouse sensitivity for rotation
+    [SerializeField] private float upDownLookRange;        // Clamp for vertical camera rotation
 
     [Header("References")]
-    [SerializeField] private CharacterController characterController;
-    [SerializeField] private Camera mainCamera;
-    [SerializeField] private PlayerInputHandler playerInputHandler;
+    [SerializeField] private CharacterController characterController;  // Main movement component
+    [SerializeField] private Camera mainCamera;                        // Player camera
+    [SerializeField] private PlayerInputHandler playerInputHandler;    // Custom input wrapper
 
-    private Vector3 currentMovement;
-    private float verticalRotation;
-    private float targetHeight;
-    private float heightVelocity;
-    private bool isCrouching = false;
+    private Vector3 currentMovement;           // Stores movement values
+    private float verticalRotation;            // Tracks camera pitch
+    private float targetHeight;                
+    private float heightVelocity;              // Reserved for smooth transitions
+    private bool isCrouching = false;          // Crouch state
 
-    private float currentSpeed => walkSpeed * (playerInputHandler.SprintTriggered && !isCrouching ? sprintMultiplier : (isCrouching ? crouchMultiplier : 1));
+    // Computes final movement speed based on sprint or crouch
+    private float currentSpeed =>
+        walkSpeed * (playerInputHandler.SprintTriggered && !isCrouching ? sprintMultiplier :
+        (isCrouching ? crouchMultiplier : 1));
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        targetHeight = defaultHeight;
+        targetHeight = defaultHeight;               
     }
 
     void Update()
@@ -50,6 +53,7 @@ public class FirstPersonController : MonoBehaviour
 
     private Vector3 CalculateWorldDirection()
     {
+        // Converts input (WASD) to world-space direction based on player orientation
         Vector3 inputDirection = new Vector3(playerInputHandler.MovementInput.x, 0f, playerInputHandler.MovementInput.y);
         Vector3 worldDirection = transform.TransformDirection(inputDirection);
         return worldDirection.normalized;
@@ -59,22 +63,23 @@ public class FirstPersonController : MonoBehaviour
     {
         if (characterController.isGrounded)
         {
-            currentMovement.y = -0.5f;
-
+            currentMovement.y = -0.5f;  // Keeps controller grounded
 
             if (playerInputHandler.JumpTriggered && !isCrouching)
             {
-                currentMovement.y = jumpForce;
+                currentMovement.y = jumpForce;  // Apply jump
             }
         }
         else
         {
+            // Apply extra gravity for better fall feel
             currentMovement.y += Physics.gravity.y * gravityMultiplier * Time.deltaTime;
         }
     }
 
-    private void HandleCrouching() 
+    private void HandleCrouching()
     {
+        // Toggles crouch height based on input and ability to stand
         if (playerInputHandler.CrouchTriggered)
         {
             targetHeight = crouchHeight;
@@ -94,41 +99,45 @@ public class FirstPersonController : MonoBehaviour
             }
         }
 
-        float newHeight = targetHeight;
-        characterController.height = newHeight;
+        characterController.height = targetHeight;
     }
 
     private bool CanStandUp()
     {
-        return true; 
+        // Placeholder for future ceiling check
+        return true;
     }
 
     private void HandleMovement()
     {
+        // Applies horizontal movement based on input and speed
         Vector3 worldDirection = CalculateWorldDirection();
         currentMovement.x = worldDirection.x * currentSpeed;
         currentMovement.z = worldDirection.z * currentSpeed;
+
         characterController.Move(currentMovement * Time.deltaTime);
     }
 
     private void ApplyHorizontalRotation(float rotationAmount)
     {
+        // Rotates the player body around the Y-axis
         transform.Rotate(0, rotationAmount, 0);
     }
 
     private void ApplyVerticalRotation(float rotationAmount)
     {
+        // Adjusts camera pitch and clamps it
         verticalRotation = Mathf.Clamp(verticalRotation - rotationAmount, -upDownLookRange, upDownLookRange);
         mainCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
     }
 
     private void HandleRotation()
     {
+        // Mouse input converted to rotation
         float mouseXRotation = playerInputHandler.RotationInput.x * mouseSensitivity;
         float mouseYRotation = playerInputHandler.RotationInput.y * mouseSensitivity;
 
         ApplyHorizontalRotation(mouseXRotation);
         ApplyVerticalRotation(mouseYRotation);
     }
-
 }

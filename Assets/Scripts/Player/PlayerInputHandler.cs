@@ -4,17 +4,17 @@ using UnityEngine.InputSystem;
 public class PlayerInputHandler : MonoBehaviour
 {
     [Header("Input Action Asset")]
-    [SerializeField] private InputActionAsset playerControls;
+    [SerializeField] private InputActionAsset playerControls;   
 
     [Header("Action Map Name Reference")]
-    [SerializeField] private string actionMapName = "Player";
+    [SerializeField] private string actionMapName = "Player";     // Action map used for player controls
 
     [Header("Action Name References")]
     [SerializeField] private string movement = "Move";
-    [SerializeField] private string rotation = "Look";
-    [SerializeField] private string jump = "Jump";
-    [SerializeField] private string sprint = "Sprint";
-    [SerializeField] private string crouch = "Crouch";
+    [SerializeField] private string rotation = "Look";           
+    [SerializeField] private string jump = "Jump";               
+    [SerializeField] private string sprint = "Sprint";           
+    [SerializeField] private string crouch = "Crouch";           
 
     private InputAction movementAction;
     private InputAction rotationAction;
@@ -22,22 +22,26 @@ public class PlayerInputHandler : MonoBehaviour
     private InputAction sprintAction;
     private InputAction crouchAction;
 
-    public Vector2 MovementInput { get; private set; }
-    public Vector2 RotationInput { get; private set; }
-    public bool JumpTriggered { get; private set; }
-    public bool SprintTriggered { get; private set; }
-    public bool CrouchTriggered { get; private set; }
+    // Public properties accessed by controller scripts
+    public Vector2 MovementInput { get; private set; }           // Stores WASD input
+    public Vector2 RotationInput { get; private set; }           // Stores mouse input
+    public bool JumpTriggered { get; private set; }              // True while jump is pressed
+    public bool SprintTriggered { get; private set; }            // True while sprint is pressed
+    public bool CrouchTriggered { get; private set; }            // True while crouch is pressed
 
     private void Awake()
     {
+        // Finds the action map from the InputActionAsset
         InputActionMap mapReference = playerControls.FindActionMap(actionMapName);
 
+        // Assigns each action based on its name
         movementAction = mapReference.FindAction(movement);
         rotationAction = mapReference.FindAction(rotation);
         jumpAction = mapReference.FindAction(jump);
         sprintAction = mapReference.FindAction(sprint);
         crouchAction = mapReference.FindAction(crouch);
 
+        // Connects input events to callbacks
         SubscribeActionValuesToInputEvents();
     }
 
@@ -61,11 +65,13 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void OnEnable()
     {
+        // Enables all actions in the selected action map
         playerControls.FindActionMap(actionMapName).Enable();
     }
 
     private void OnDisable()
     {
+        // Disables all actions in the selected action map
         playerControls.FindActionMap(actionMapName).Disable();
     }
 }

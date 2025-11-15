@@ -2,32 +2,33 @@ using UnityEngine;
 
 public class PlayerHidingManager : MonoBehaviour
 {
-    public bool isCompletlyHidden;
-    public bool isPartiallyHidden;
+    public bool isCompletlyHidden;     // True when player is in a full hiding spot
+    public bool isPartiallyHidden;     // True when player is in a partial hiding spot
 
     void Start()
     {
-        isPartiallyHidden = false;
+        isPartiallyHidden = false;     // Initialize hiding states
         isCompletlyHidden = false;
     }
 
     public void SetHiddenStatus(bool isCompletlyHidden)
     {
-        this.isCompletlyHidden = isCompletlyHidden;
+        this.isCompletlyHidden = isCompletlyHidden;   // Update full hiding status
     }
 
     public void SetPartiallyHiddenStatus(bool isPartiallyHidden)
     {
-        this.isPartiallyHidden = isPartiallyHidden;
+        this.isPartiallyHidden = isPartiallyHidden;   // Update partial hiding status
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "HiddenLocation")
+        // Detect entry into hiding zones based on tags
+        if (other.gameObject.tag == "HiddenLocation")
         {
             SetHiddenStatus(true);
         }
-        if(other.gameObject.tag == "PartiallyHiddenLocation")
+        if (other.gameObject.tag == "PartiallyHiddenLocation")
         {
             SetPartiallyHiddenStatus(true);
         }
@@ -35,11 +36,12 @@ public class PlayerHidingManager : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.tag == "HiddenLocation")
+        // Reset hiding status when leaving the area
+        if (other.gameObject.tag == "HiddenLocation")
         {
             SetHiddenStatus(false);
         }
-        if(other.gameObject.tag == "PartiallyHiddenLocation")
+        if (other.gameObject.tag == "PartiallyHiddenLocation")
         {
             SetPartiallyHiddenStatus(false);
         }
