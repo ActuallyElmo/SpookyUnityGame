@@ -612,7 +612,7 @@ MonoBehaviour:
   gravityMultiplier: 1
   defaultHeight: 3
   crouchHeight: 1
-  crouchSmoothTime: 0
+  crouchSmoothTime: 0.125
   mouseSensitivity: 0.1
   upDownLookRange: 80
   characterController: {fileID: 872992542}
