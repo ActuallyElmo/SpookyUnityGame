@@ -1,88 +1,209 @@
 fileFormatVersion: 2
 guid: 3c169c4578e06a4439f0140b54e4eacd
-timeCreated: 1512321516
-licenseType: Store
+AssetOrigin:
+  serializedVersion: 1
+  productId: 49137
+  packageName: Abandoned Asylum
+  packageVersion: 1.4
+  assetPath: Assets/Abandoned_Asylum/Models/MorgueBox.fbx
+  uploadId: 380667
 ModelImporter:
-  serializedVersion: 19
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: MorgueBox
-    100004: MorgueBox_Bed
-    100006: MorgueBox_Bed2
-    100008: MorgueBox_Bed3
-    100010: MorgueBox_Bed4
-    100012: MorgueBox_Door
-    100014: MorgueBox_Door2
-    100016: MorgueBox_Door3
-    100018: MorgueBox_Door4
-    400000: MorgueBox
-    400002: //RootNode
-    400004: MorgueBox_Bed
-    400006: MorgueBox_Bed2
-    400008: MorgueBox_Bed3
-    400010: MorgueBox_Bed4
-    400012: MorgueBox_Door
-    400014: MorgueBox_Door2
-    400016: MorgueBox_Door3
-    400018: MorgueBox_Door4
-    2300000: MorgueBox
-    2300002: MorgueBox_Bed
-    2300004: MorgueBox_Bed2
-    2300006: MorgueBox_Bed3
-    2300008: MorgueBox_Bed4
-    2300010: MorgueBox_Door
-    2300012: MorgueBox_Door2
-    2300014: MorgueBox_Door3
-    2300016: MorgueBox_Door4
-    3300000: MorgueBox
-    3300002: MorgueBox_Bed
-    3300004: MorgueBox_Bed2
-    3300006: MorgueBox_Bed3
-    3300008: MorgueBox_Bed4
-    3300010: MorgueBox_Door
-    3300012: MorgueBox_Door2
-    3300014: MorgueBox_Door3
-    3300016: MorgueBox_Door4
-    4300000: MorgueBox_Bed
-    4300002: MorgueBox
-    4300004: MorgueBox_Door
-    4300006: MorgueBox_Door2
-    4300008: MorgueBox_Door3
-    4300010: MorgueBox_Door4
-    4300012: MorgueBox_Bed2
-    4300014: MorgueBox_Bed4
-    4300016: MorgueBox_Bed3
-    6400000: MorgueBox
-    6400002: MorgueBox_Bed
-    6400004: MorgueBox_Bed2
-    6400006: MorgueBox_Bed3
-    6400008: MorgueBox_Bed4
-    6400010: MorgueBox_Door
-    6400012: MorgueBox_Door2
-    6400014: MorgueBox_Door3
-    6400016: MorgueBox_Door4
+  serializedVersion: 22200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: MorgueBox
+  - first:
+      1: 100004
+    second: MorgueBox_Bed
+  - first:
+      1: 100006
+    second: MorgueBox_Bed2
+  - first:
+      1: 100008
+    second: MorgueBox_Bed3
+  - first:
+      1: 100010
+    second: MorgueBox_Bed4
+  - first:
+      1: 100012
+    second: MorgueBox_Door
+  - first:
+      1: 100014
+    second: MorgueBox_Door2
+  - first:
+      1: 100016
+    second: MorgueBox_Door3
+  - first:
+      1: 100018
+    second: MorgueBox_Door4
+  - first:
+      4: 400000
+    second: MorgueBox
+  - first:
+      4: 400002
+    second: //RootNode
+  - first:
+      4: 400004
+    second: MorgueBox_Bed
+  - first:
+      4: 400006
+    second: MorgueBox_Bed2
+  - first:
+      4: 400008
+    second: MorgueBox_Bed3
+  - first:
+      4: 400010
+    second: MorgueBox_Bed4
+  - first:
+      4: 400012
+    second: MorgueBox_Door
+  - first:
+      4: 400014
+    second: MorgueBox_Door2
+  - first:
+      4: 400016
+    second: MorgueBox_Door3
+  - first:
+      4: 400018
+    second: MorgueBox_Door4
+  - first:
+      23: 2300000
+    second: MorgueBox
+  - first:
+      23: 2300002
+    second: MorgueBox_Bed
+  - first:
+      23: 2300004
+    second: MorgueBox_Bed2
+  - first:
+      23: 2300006
+    second: MorgueBox_Bed3
+  - first:
+      23: 2300008
+    second: MorgueBox_Bed4
+  - first:
+      23: 2300010
+    second: MorgueBox_Door
+  - first:
+      23: 2300012
+    second: MorgueBox_Door2
+  - first:
+      23: 2300014
+    second: MorgueBox_Door3
+  - first:
+      23: 2300016
+    second: MorgueBox_Door4
+  - first:
+      33: 3300000
+    second: MorgueBox
+  - first:
+      33: 3300002
+    second: MorgueBox_Bed
+  - first:
+      33: 3300004
+    second: MorgueBox_Bed2
+  - first:
+      33: 3300006
+    second: MorgueBox_Bed3
+  - first:
+      33: 3300008
+    second: MorgueBox_Bed4
+  - first:
+      33: 3300010
+    second: MorgueBox_Door
+  - first:
+      33: 3300012
+    second: MorgueBox_Door2
+  - first:
+      33: 3300014
+    second: MorgueBox_Door3
+  - first:
+      33: 3300016
+    second: MorgueBox_Door4
+  - first:
+      43: 4300000
+    second: MorgueBox_Bed
+  - first:
+      43: 4300002
+    second: MorgueBox
+  - first:
+      43: 4300004
+    second: MorgueBox_Door
+  - first:
+      43: 4300006
+    second: MorgueBox_Door2
+  - first:
+      43: 4300008
+    second: MorgueBox_Door3
+  - first:
+      43: 4300010
+    second: MorgueBox_Door4
+  - first:
+      43: 4300012
+    second: MorgueBox_Bed2
+  - first:
+      43: 4300014
+    second: MorgueBox_Bed4
+  - first:
+      43: 4300016
+    second: MorgueBox_Bed3
+  - first:
+      64: 6400000
+    second: MorgueBox
+  - first:
+      64: 6400002
+    second: MorgueBox_Bed
+  - first:
+      64: 6400004
+    second: MorgueBox_Bed2
+  - first:
+      64: 6400006
+    second: MorgueBox_Bed3
+  - first:
+      64: 6400008
+    second: MorgueBox_Bed4
+  - first:
+      64: 6400010
+    second: MorgueBox_Door
+  - first:
+      64: 6400012
+    second: MorgueBox_Door2
+  - first:
+      64: 6400014
+    second: MorgueBox_Door3
+  - first:
+      64: 6400016
+    second: MorgueBox_Door4
+  externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations: []
     isReadable: 1
   meshes:
@@ -90,26 +211,49 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 1
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 0
+    importVisibility: 0
     importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 1
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 0
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -119,22 +263,20 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
   humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 49137
-  packageName: Abandoned Asylum
-  packageVersion: 1.4
-  assetPath: Assets/Abandoned_Asylum/Models/MorgueBox.fbx
-  uploadId: 380667
