@@ -113,14 +113,15 @@ public class FirstPersonController : MonoBehaviour
         float radius = characterController.radius;
         float standHeight = defaultHeight;
 
-        // Bottom and top of the capsule if standing
-        Vector3 bottom = transform.position + Vector3.up * radius;
-        Vector3 top = transform.position + Vector3.up * (standHeight - radius);
+        // Compute bottom and top of the capsule if standing
+        Vector3 bottom = transform.position + characterController.center - Vector3.up * (characterController.height / 2 - radius);
+        Vector3 top = bottom + Vector3.up * (standHeight - 2 * radius);
 
-        // Check for obstacles above using OverlapCapsule
+        // Check for any colliders in the space above using OverlapCapsule
         Collider[] hits = Physics.OverlapCapsule(bottom, top, radius, ~0, QueryTriggerInteraction.Ignore);
         foreach (var hit in hits)
         {
+            // Ignore the player's own collider
             if (hit != characterController)
                 return false; // Something is blocking the space above
         }
