@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6cc253bd6eb2c4f41a5287a00bfbd08a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 170088
+  packageName: Double Open End Wrench
+  packageVersion: 5.0.2
+  assetPath: Assets/Tools/double_open_end_wrench/Materials/double_open_end_wrench.mat
+  uploadId: 371763

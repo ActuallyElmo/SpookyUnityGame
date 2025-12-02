@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5c40a888773ea6b4d90434e6382c6239
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 170088
+  packageName: Double Open End Wrench
+  packageVersion: 5.0.2
+  assetPath: Assets/Tools/double_open_end_wrench/Prefabs/double_open_end_wrench.prefab
+  uploadId: 371763
