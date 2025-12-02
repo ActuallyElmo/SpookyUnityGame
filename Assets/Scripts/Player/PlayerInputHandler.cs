@@ -14,13 +14,18 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField] private string rotation = "Look";           
     [SerializeField] private string jump = "Jump";               
     [SerializeField] private string sprint = "Sprint";           
-    [SerializeField] private string crouch = "Crouch";           
+    [SerializeField] private string crouch = "Crouch";         
+    [SerializeField] private string pickup = "Pickup";          
+    [SerializeField] private string drop = "Drop";    
 
     private InputAction movementAction;
     private InputAction rotationAction;
     private InputAction jumpAction;
     private InputAction sprintAction;
     private InputAction crouchAction;
+    private InputAction pickupAction;
+    private InputAction dropAction;
+
 
     // Public properties accessed by controller scripts
     public Vector2 MovementInput { get; private set; }           // Stores WASD input
@@ -28,6 +33,9 @@ public class PlayerInputHandler : MonoBehaviour
     public bool JumpTriggered { get; private set; }              // True while jump is pressed
     public bool SprintTriggered { get; private set; }            // True while sprint is pressed
     public bool CrouchTriggered { get; private set; }            // True while crouch is pressed
+    public bool PickupTriggered { get; private set; }           
+    public bool DropTriggered { get; private set; }             
+
 
     private void Awake()
     {
@@ -40,9 +48,16 @@ public class PlayerInputHandler : MonoBehaviour
         jumpAction = mapReference.FindAction(jump);
         sprintAction = mapReference.FindAction(sprint);
         crouchAction = mapReference.FindAction(crouch);
+        pickupAction = mapReference.FindAction(pickup);
+        dropAction = mapReference.FindAction(drop);
+
+        // Initialize triggers
+        PickupTriggered = false;
+        DropTriggered = false;
 
         // Connects input events to callbacks
         SubscribeActionValuesToInputEvents();
+
     }
 
     private void SubscribeActionValuesToInputEvents()
@@ -61,17 +76,38 @@ public class PlayerInputHandler : MonoBehaviour
 
         crouchAction.performed += inputInfo => CrouchTriggered = true;
         crouchAction.canceled += inputInfo => CrouchTriggered = false;
+
+        pickupAction.performed += ctx => PickupTriggered = true;
+        pickupAction.canceled += ctx => PickupTriggered = false;
+
+        dropAction.performed += ctx => DropTriggered = true;
+        dropAction.canceled += ctx => DropTriggered = false;
     }
 
     private void OnEnable()
     {
-        // Enables all actions in the selected action map
         playerControls.FindActionMap(actionMapName).Enable();
+        pickupAction.Enable();
+        dropAction.Enable();
+
     }
 
     private void OnDisable()
     {
-        // Disables all actions in the selected action map
         playerControls.FindActionMap(actionMapName).Disable();
+        pickupAction.Disable();
+        dropAction.Disable();
+
     }
+
+        public void ResetPickupTrigger()
+    {
+        PickupTriggered = false;
+    }
+        public void ResetDropTrigger()
+    {
+        DropTriggered = false;
+    }
+
+
 }
