@@ -146,23 +146,43 @@ public class EnemyAI : MonoBehaviour
     {
         if (playerTarget == null) return false;
 
-        // Offsets position to simulate eye level (approx 1.6m height)
-        Vector3 enemyEyes = transform.position + Vector3.up * 1.6f;
-        Vector3 playerCenter = playerTarget.position + Vector3.up * 1.6f;
-
-        Vector3 directionToPlayer = (playerCenter - enemyEyes).normalized;
-        float distanceToPlayer = Vector3.Distance(transform.position, playerTarget.position);
-
-        // Check distance within radius
-        if (distanceToPlayer < detectionRadius)
+        // 1. Get player's current height and determine the target point.
+        CharacterController playerCC = playerTarget.GetComponent<CharacterController>();
+        
+        // Define player target point based on their current height
+        float playerCenterOffset = 1.6f; // Default standing height offset (e.g., center of a 3.2m character)
+        if (playerCC != null)
         {
-            // Check if target is within field of view
-            if (Vector3.Angle(transform.forward, directionToPlayer) < fieldOfViewAngle / 2)
+            // Use the CharacterController's current height to find the center
+            // The center of a standing or crouching CC is typically at half its height.
+            playerCenterOffset = playerCC.height * 0.4f; 
+        }
+        
+        Vector3 playerTargetPoint = playerTarget.position + Vector3.up * playerCenterOffset;
+
+        // 2. Define the Enemy's eye height
+        float enemyEyeHeight = 1.6f; 
+        Vector3 enemyEyes = transform.position + Vector3.up * enemyEyeHeight;
+
+        // 3. Calculate direction and distance for Raycast
+        Vector3 directionToPlayer = (playerTargetPoint - enemyEyes).normalized;
+        // Calculate distance from eye to target point
+        float distanceToPlayer = Vector3.Distance(enemyEyes, playerTargetPoint); 
+
+        // Check distance within radius (using base-to-base distance for the sphere check)
+        if (Vector3.Distance(transform.position, playerTarget.position) < detectionRadius)
+        {
+            // Check if target is within field of view (using flat, horizontal angle)
+            Vector3 enemyForwardFlat = new Vector3(transform.forward.x, 0, transform.forward.z).normalized;
+            Vector3 directionFlat = new Vector3(directionToPlayer.x, 0, directionToPlayer.z).normalized;
+
+            if (Vector3.Angle(enemyForwardFlat, directionFlat) < fieldOfViewAngle / 2)
             {
                 // Verify line of sight using Raycast
+                // Cast from the enemy's eye position towards the player's dynamic center point.
                 if (!Physics.Raycast(enemyEyes, directionToPlayer, distanceToPlayer, obstacleLayer))
                 {
-                    // Player is visible
+                    // Player is visible through the line of sight check
                     return true; 
                 }
             }
