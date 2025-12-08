@@ -41,7 +41,7 @@ public class DoorRaycast : MonoBehaviour
                 if (!raycastedDoor)
                 {
                     raycastedDoor = hit.collider.gameObject.GetComponent<DoorController>();
-                    Console.WriteLine("Found Door");
+                    Debug.Log("Door Found");
                 }
 
                 if (interactAction.WasPressedThisFrame())
