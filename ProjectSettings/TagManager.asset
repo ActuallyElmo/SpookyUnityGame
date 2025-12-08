@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PartiallyHiddenLocation
   - HiddenLocation
+  - Door
   layers:
   - Default
   - TransparentFX
@@ -13,8 +14,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Interact
+  - Door
   - 
   - 
   - 
