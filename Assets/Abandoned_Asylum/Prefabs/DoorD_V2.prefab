@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 33400654289310176}
   - component: {fileID: 23574759475550582}
   - component: {fileID: 64053413180486298}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: DoorD_V2_Window
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &4116950318631592
 Transform:
@@ -230,12 +230,12 @@ GameObject:
   - component: {fileID: 33085613640202482}
   - component: {fileID: 23764983916080852}
   - component: {fileID: 64037250782672568}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: DoorD_V2_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &4910695852568464
 Transform:
@@ -339,12 +339,12 @@ GameObject:
   - component: {fileID: 33576591924204072}
   - component: {fileID: 23088877053522544}
   - component: {fileID: 64854967979305636}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: DoorD_V2_Window2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &4009549000909392
 Transform:
@@ -448,12 +448,12 @@ GameObject:
   - component: {fileID: 33550380685485700}
   - component: {fileID: 23191419405090192}
   - component: {fileID: 64086888208593442}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: DoorD_V2_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &4595063061207878
 Transform:
@@ -588,10 +588,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1445996614934991975}
   - component: {fileID: 5441351004491680972}
-  - component: {fileID: 1485956134862745447}
   m_Layer: 7
   m_Name: LeftDoorPivot
-  m_TagString: Door
+  m_TagString: DoubleDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -632,20 +631,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.97, y: 2.13, z: -0.06}
-  m_Center: {x: -0.52, y: 0.05, z: 0.05}
---- !u!114 &1485956134862745447
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3387917124857140362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22fcf73a41b1aca4fbe6de0adff6158c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Size: {x: 0.97, y: 2.13, z: 0.06}
+  m_Center: {x: -0.5, y: 0.05, z: 0.05}
 --- !u!1 &6198368658346190844
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,7 +646,7 @@ GameObject:
   - component: {fileID: 9088177690024337169}
   m_Layer: 0
   m_Name: DoorD_V2_Doors
-  m_TagString: DoubleDoor
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -710,7 +697,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6198368658346190844}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 22fcf73a41b1aca4fbe6de0adff6158c, type: 3}
   m_Name: 
@@ -725,10 +712,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8715266098773228669}
   - component: {fileID: 7726381017907861692}
-  - component: {fileID: 1335687279166104717}
   m_Layer: 7
   m_Name: RightDoorPivot
-  m_TagString: Door
+  m_TagString: DoubleDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -769,17 +755,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.97, y: 2.13, z: -0.06}
+  m_Size: {x: 0.97, y: 2.13, z: 0.06}
   m_Center: {x: 0.53, y: -0.18, z: 0.05}
---- !u!114 &1335687279166104717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8536460646381028779}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22fcf73a41b1aca4fbe6de0adff6158c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

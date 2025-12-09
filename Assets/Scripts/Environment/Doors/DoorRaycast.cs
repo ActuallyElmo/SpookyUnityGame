@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class DoorRaycast : MonoBehaviour
 {
     [SerializeField] private int rayDistance = 5;
-    [SerializeField] private LayerMask layerMask;
+    //[SerializeField] private LayerMask layerMask;
     [SerializeField] private string excludeLayerName = null;
 
     [Header("Input Action Asset")]
@@ -19,6 +19,7 @@ public class DoorRaycast : MonoBehaviour
     private InputAction interactAction;
 
     private const string doorTag = "Door";
+    private const string doubleDoorTag = "DoubleDoor";
     private DoorController raycastedDoor = null;
 
     private void Awake()
@@ -32,16 +33,28 @@ public class DoorRaycast : MonoBehaviour
     {
         RaycastHit hit;
 
-        int mask = 1 << LayerMask.NameToLayer(excludeLayerName) | layerMask.value;
-
-        if(Physics.Raycast(transform.position, transform.forward, out hit, rayDistance, mask))
+        if(Physics.Raycast(transform.position, transform.forward, out hit, rayDistance))
         {
             if (hit.collider.CompareTag(doorTag))
             {
                 if (!raycastedDoor)
                 {
                     raycastedDoor = hit.collider.gameObject.GetComponent<DoorController>();
-                    Debug.Log("Door Found");
+                    Debug.Log("Door Found1");
+                }
+
+                if (interactAction.WasPressedThisFrame())
+                {
+                    raycastedDoor.PlayAnimation();
+                }
+            }
+            else if (hit.collider.CompareTag(doubleDoorTag))
+            {
+                if (!raycastedDoor)
+                {
+                    raycastedDoor = hit.collider.gameObject.GetComponentInParent<DoorController>();
+                    Debug.Log("Door Found2");
+                    Debug.Log(raycastedDoor.gameObject.name);
                 }
 
                 if (interactAction.WasPressedThisFrame())
