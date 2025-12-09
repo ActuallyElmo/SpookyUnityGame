@@ -6,7 +6,7 @@ public class DoorRaycast : MonoBehaviour
 {
     [SerializeField] private int rayDistance = 5;
     //[SerializeField] private LayerMask layerMask;
-    [SerializeField] private string excludeLayerName = null;
+    //[SerializeField] private string excludeLayerName = null;
 
     [Header("Input Action Asset")]
     [SerializeField] private InputActionAsset playerControls;
