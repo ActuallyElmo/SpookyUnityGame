@@ -10,6 +10,7 @@ public class FirstPersonController : MonoBehaviour
     [Header("Jump Parameters")]
     [SerializeField] private float jumpForce;              // Initial jump force
     [SerializeField] private float gravityMultiplier;      // Extra gravity applied while falling
+    [SerializeField] private bool disableJump = false;
 
     [Header("Crouch Parameters")]
     [SerializeField] private float defaultHeight;          // Controller height while standing
@@ -65,7 +66,7 @@ public class FirstPersonController : MonoBehaviour
         {
             currentMovement.y = -0.5f;  // Keeps controller grounded
 
-            if (playerInputHandler.JumpTriggered)
+            if (playerInputHandler.JumpTriggered && disableJump == false)
             {
                 currentMovement.y = jumpForce;  // Apply jump
             }
@@ -118,7 +119,7 @@ public class FirstPersonController : MonoBehaviour
         Vector3 top = bottom + Vector3.up * (standHeight - 2 * radius);
 
         // Check for any colliders in the space above using OverlapCapsule
-        Collider[] hits = Physics.OverlapCapsule(bottom, top, radius, ~0, QueryTriggerInteraction.Ignore);
+        Collider[] hits = Physics.OverlapCapsule(bottom, top, radius, LayerMask.NameToLayer("Map"), QueryTriggerInteraction.Ignore);
         foreach (var hit in hits)
         {
             // Ignore the player's own collider

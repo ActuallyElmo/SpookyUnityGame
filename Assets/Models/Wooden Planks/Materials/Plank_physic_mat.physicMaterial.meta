@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: dbe2fc50374f5e148bfa19664b14f704
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 13400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 308365
+  packageName: Wooden Planks - various
+  packageVersion: 1.0
+  assetPath: Assets/Game Assets/Aegis77/Wooden Planks/Materials/Plank_physic_mat.physicMaterial
+  uploadId: 725149

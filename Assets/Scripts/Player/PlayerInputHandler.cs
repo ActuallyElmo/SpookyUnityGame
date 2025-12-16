@@ -3,27 +3,15 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    [Header("Input Action Asset")]
-    [SerializeField] private InputActionAsset playerControls;   
+    private PlayerInputActions playerControls;
 
-    [Header("Action Map Name Reference")]
-    [SerializeField] private string actionMapName = "Player";     // Action map used for player controls
-
-    [Header("Action Name References")]
-    [SerializeField] private string movement = "Move";
-    [SerializeField] private string rotation = "Look";           
-    [SerializeField] private string jump = "Jump";               
-    [SerializeField] private string sprint = "Sprint";           
-    [SerializeField] private string crouch = "Crouch";         
-    [SerializeField] private string pickup = "Pickup";          
-    [SerializeField] private string drop = "Drop";    
 
     private InputAction movementAction;
     private InputAction rotationAction;
     private InputAction jumpAction;
     private InputAction sprintAction;
     private InputAction crouchAction;
-    private InputAction pickupAction;
+    private InputAction interactAction;
     private InputAction dropAction;
 
 
@@ -33,26 +21,26 @@ public class PlayerInputHandler : MonoBehaviour
     public bool JumpTriggered { get; private set; }              // True while jump is pressed
     public bool SprintTriggered { get; private set; }            // True while sprint is pressed
     public bool CrouchTriggered { get; private set; }            // True while crouch is pressed
-    public bool PickupTriggered { get; private set; }           
+    public bool InteractTriggered { get; private set; }           
     public bool DropTriggered { get; private set; }             
 
 
     private void Awake()
     {
-        // Finds the action map from the InputActionAsset
-        InputActionMap mapReference = playerControls.FindActionMap(actionMapName);
+        playerControls = new PlayerInputActions();
+        playerControls.Enable();
 
         // Assigns each action based on its name
-        movementAction = mapReference.FindAction(movement);
-        rotationAction = mapReference.FindAction(rotation);
-        jumpAction = mapReference.FindAction(jump);
-        sprintAction = mapReference.FindAction(sprint);
-        crouchAction = mapReference.FindAction(crouch);
-        pickupAction = mapReference.FindAction(pickup);
-        dropAction = mapReference.FindAction(drop);
+        movementAction = playerControls.Player.Move;
+        rotationAction = playerControls.Player.Look;
+        jumpAction = playerControls.Player.Jump;
+        sprintAction = playerControls.Player.Sprint;
+        crouchAction = playerControls.Player.Crouch;
+        interactAction = playerControls.Player.Interact;
+        dropAction = playerControls.Player.Drop;
 
         // Initialize triggers
-        PickupTriggered = false;
+        InteractTriggered = false;
         DropTriggered = false;
 
         // Connects input events to callbacks
@@ -77,8 +65,8 @@ public class PlayerInputHandler : MonoBehaviour
         crouchAction.performed += inputInfo => CrouchTriggered = true;
         crouchAction.canceled += inputInfo => CrouchTriggered = false;
 
-        pickupAction.performed += ctx => PickupTriggered = true;
-        pickupAction.canceled += ctx => PickupTriggered = false;
+        interactAction.performed += ctx => InteractTriggered = true;
+        interactAction.canceled += ctx => InteractTriggered = false;
 
         dropAction.performed += ctx => DropTriggered = true;
         dropAction.canceled += ctx => DropTriggered = false;
@@ -86,25 +74,25 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        playerControls.FindActionMap(actionMapName).Enable();
-        pickupAction.Enable();
+        //playerControls.FindActionMap(actionMapName).Enable();
+        interactAction.Enable();
         dropAction.Enable();
 
     }
 
     private void OnDisable()
     {
-        playerControls.FindActionMap(actionMapName).Disable();
-        pickupAction.Disable();
+        //playerControls.FindActionMap(actionMapName).Disable();
+        interactAction.Disable();
         dropAction.Disable();
 
     }
 
-        public void ResetPickupTrigger()
+    public void ResetPickupTrigger()
     {
-        PickupTriggered = false;
+        InteractTriggered = false;
     }
-        public void ResetDropTrigger()
+    public void ResetDropTrigger()
     {
         DropTriggered = false;
     }

@@ -10,7 +10,7 @@ public class LanternController : MonoBehaviour
         if (inputHandler == null || lanternLight == null) return;
 
         
-        if (inputHandler.PickupTriggered)
+        if (inputHandler.InteractTriggered)
         {
             lanternLight.enabled = !lanternLight.enabled;
             inputHandler.ResetPickupTrigger(); 

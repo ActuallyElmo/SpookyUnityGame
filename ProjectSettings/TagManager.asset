@@ -12,11 +12,13 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Interact
   - Door
+  - Interactable
+  - Map
   - 
   - 
   - 
