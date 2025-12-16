@@ -7,21 +7,27 @@ public class EnemyAI : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private EnemyState currentState;
-    [SerializeField] private float walkSpeed = 3.5f;       // Base walking speed
-    [SerializeField] private float runSpeed = 6.0f;        // Chasing speed
+    [SerializeField] private float walkSpeed = 3.5f;       
+    [SerializeField] private float runSpeed = 6.0f;        
 
     [Header("Detection Parameters")]
-    [SerializeField] private float detectionRadius = 10f;  // Vision range
-    [SerializeField] private float fieldOfViewAngle = 60f; // View angle cone
-    [SerializeField] private LayerMask playerLayer;        // Layer for player detection
-    [SerializeField] private LayerMask obstacleLayer;      // Layer for blocking vision
+    [SerializeField] private float detectionRadius = 10f;  
+    [SerializeField] private float fieldOfViewAngle = 60f; 
+    [SerializeField] private LayerMask playerLayer;        
+    [SerializeField] private LayerMask obstacleLayer;      
 
     [Header("Patrol Parameters")]
-    [SerializeField] private Transform[] patrolPoints;     // List of patrol waypoints
-    [SerializeField] private float waitTimeAtPoint = 2f;   // Time to wait at each point
+    [SerializeField] private Transform[] patrolPoints;     
+    [SerializeField] private float waitTimeAtPoint = 2f;   
+    [SerializeField] private bool randomizePatrol = true; // NEW: Toggle for random pathing
 
     [Header("Search Parameters")]
-    [SerializeField] private float searchDuration = 5f;    // Time spent searching before returning to patrol
+    [SerializeField] private float searchDuration = 5f;    
+
+    [Header("Dynamic Difficulty (New)")]
+    [SerializeField] private int encounterCount = 0;       // How many times player was seen
+    [SerializeField] private float rageMultiplier = 1.1f;  // Stats increase by 10% per encounter
+    [SerializeField] private float maxSpeedCap = 9.0f;     // Limit so he doesn't become Sonic
 
     [Header("References")]
     private NavMeshAgent agent;
@@ -29,13 +35,12 @@ public class EnemyAI : MonoBehaviour
     private int currentPatrolIndex = 0;
     private float waitTimer;
     private float searchTimer;
-    private Vector3 lastKnownPosition;                     // Stores player's last valid position
+    private Vector3 lastKnownPosition;                     
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         
-        // Locates the player instance via Singleton
         if (PlayerSingleton.instance != null)
         {
             playerTarget = PlayerSingleton.instance.transform;
@@ -46,13 +51,18 @@ public class EnemyAI : MonoBehaviour
         if (NavMesh.SamplePosition(transform.position, out hit, 5.0f, NavMesh.AllAreas)) 
         {
             agent.Warp(hit.position); 
-            Debug.Log("Enemy agent successfully snapped to NavMesh.");
         }
         else
         {
-            Debug.LogError("CRITICAL ERROR: No NavMesh found within 5m. Agent is too far from the baked surface.");
+            Debug.LogError("CRITICAL ERROR: No NavMesh found within 5m.");
             enabled = false; 
             return;
+        }
+
+        // Pick a random start point if randomized
+        if (randomizePatrol && patrolPoints.Length > 0)
+        {
+            currentPatrolIndex = Random.Range(0, patrolPoints.Length);
         }
 
         currentState = EnemyState.Patrolling;
@@ -62,14 +72,18 @@ public class EnemyAI : MonoBehaviour
     {
         if (playerTarget == null) return;
 
-        // Handles state transitions based on detection
+        // Detection Logic
         if (CanSeePlayer())
         {
             lastKnownPosition = playerTarget.position;
+            if (currentState != EnemyState.Chasing)
+            {
+                IncreaseAggression();
+            }
+
             currentState = EnemyState.Chasing;
         }
 
-        // Executes logic based on current state
         switch (currentState)
         {
             case EnemyState.Patrolling:
@@ -84,23 +98,51 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private void IncreaseAggression()
+    {
+        encounterCount++;
+        Debug.Log($"Enemy Enraged! Encounter count: {encounterCount}");
+
+        // Increase speeds but clamp to max limit
+        walkSpeed = Mathf.Min(walkSpeed * rageMultiplier, maxSpeedCap);
+        runSpeed = Mathf.Min(runSpeed * rageMultiplier, maxSpeedCap);
+        
+        // Increase senses
+        detectionRadius = Mathf.Min(detectionRadius * 1.1f, 20f); // Cap vision at 20m
+        searchDuration += 1.0f; 
+    }
+
     private void PatrolBehavior()
     {
         agent.speed = walkSpeed;
 
         if (patrolPoints.Length == 0) return;
 
-        // Checks if destination is reached
         if (agent.remainingDistance < 0.5f && !agent.pathPending)
         {
             waitTimer += Time.deltaTime;
             if (waitTimer >= waitTimeAtPoint)
             {
-                // Cycle to the next patrol point
-                currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
+                ChooseNextPatrolPoint();
                 agent.SetDestination(patrolPoints[currentPatrolIndex].position);
                 waitTimer = 0f;
             }
+        }
+    }
+
+    private void ChooseNextPatrolPoint()
+    {
+        if (randomizePatrol)
+        {
+            int newIndex = currentPatrolIndex;
+            if (patrolPoints.Length > 1) 
+            {
+                while (newIndex == currentPatrolIndex)
+                {
+                    newIndex = Random.Range(0, patrolPoints.Length);
+                }
+            }
+            currentPatrolIndex = newIndex;
         }
     }
 
@@ -109,7 +151,6 @@ public class EnemyAI : MonoBehaviour
         agent.speed = runSpeed;
         agent.SetDestination(playerTarget.position);
 
-        // Switch to search if visual contact is lost
         if (!CanSeePlayer())
         {
             currentState = EnemyState.Searching;
@@ -117,9 +158,9 @@ public class EnemyAI : MonoBehaviour
             searchTimer = 0f;
         }
         
-        // Interaction logic when close to player
         if (Vector3.Distance(transform.position, playerTarget.position) < 1.5f)
         {
+            // Placeholder for attack logic
             Debug.Log("Player caught.");
         }
     }
@@ -128,15 +169,14 @@ public class EnemyAI : MonoBehaviour
     {
         agent.speed = walkSpeed;
 
-        // Wait at last known position
         if (agent.remainingDistance < 0.5f)
         {
             searchTimer += Time.deltaTime;
             
-            // Return to patrol after search duration expires
             if (searchTimer > searchDuration)
             {
                 currentState = EnemyState.Patrolling;
+                // Go to the nearest patrol point instead of random to look smarter
                 agent.SetDestination(patrolPoints[currentPatrolIndex].position);
             }
         }
@@ -146,43 +186,18 @@ public class EnemyAI : MonoBehaviour
     {
         if (playerTarget == null) return false;
 
-        // 1. Get player's current height and determine the target point.
-        CharacterController playerCC = playerTarget.GetComponent<CharacterController>();
-        
-        // Define player target point based on their current height
-        float playerCenterOffset = 1.6f; // Default standing height offset (e.g., center of a 3.2m character)
-        if (playerCC != null)
+        Vector3 enemyEyes = transform.position + Vector3.up * 1.6f;
+        Vector3 playerCenter = playerTarget.position + Vector3.up * 1.6f;
+
+        Vector3 directionToPlayer = (playerCenter - enemyEyes).normalized;
+        float distanceToPlayer = Vector3.Distance(transform.position, playerTarget.position);
+
+        if (distanceToPlayer < detectionRadius)
         {
-            // Use the CharacterController's current height to find the center
-            // The center of a standing or crouching CC is typically at half its height.
-            playerCenterOffset = playerCC.height * 0.4f; 
-        }
-        
-        Vector3 playerTargetPoint = playerTarget.position + Vector3.up * playerCenterOffset;
-
-        // 2. Define the Enemy's eye height
-        float enemyEyeHeight = 1.6f; 
-        Vector3 enemyEyes = transform.position + Vector3.up * enemyEyeHeight;
-
-        // 3. Calculate direction and distance for Raycast
-        Vector3 directionToPlayer = (playerTargetPoint - enemyEyes).normalized;
-        // Calculate distance from eye to target point
-        float distanceToPlayer = Vector3.Distance(enemyEyes, playerTargetPoint); 
-
-        // Check distance within radius (using base-to-base distance for the sphere check)
-        if (Vector3.Distance(transform.position, playerTarget.position) < detectionRadius)
-        {
-            // Check if target is within field of view (using flat, horizontal angle)
-            Vector3 enemyForwardFlat = new Vector3(transform.forward.x, 0, transform.forward.z).normalized;
-            Vector3 directionFlat = new Vector3(directionToPlayer.x, 0, directionToPlayer.z).normalized;
-
-            if (Vector3.Angle(enemyForwardFlat, directionFlat) < fieldOfViewAngle / 2)
+            if (Vector3.Angle(transform.forward, directionToPlayer) < fieldOfViewAngle / 2)
             {
-                // Verify line of sight using Raycast
-                // Cast from the enemy's eye position towards the player's dynamic center point.
                 if (!Physics.Raycast(enemyEyes, directionToPlayer, distanceToPlayer, obstacleLayer))
                 {
-                    // Player is visible through the line of sight check
                     return true; 
                 }
             }
@@ -190,7 +205,6 @@ public class EnemyAI : MonoBehaviour
         return false;
     }
 
-    // Visualizes detection range and angle in Editor
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
