@@ -9,6 +9,10 @@ public class PlayerPickupSystem : MonoBehaviour
     private Rigidbody heldRb;                        // Rigidbody of the held object
     private PlayerInputHandler inputHandler;         // Handles player input for picking/dropping
 
+    [Header("Throw Settings")]
+    [SerializeField] private float throwForce;
+    [SerializeField] private float upwardForce;
+
     void Awake()
     {
         inputHandler = GetComponent<PlayerInputHandler>(); // Get input handler from the player
@@ -93,13 +97,20 @@ public class PlayerPickupSystem : MonoBehaviour
     {
         if (heldObject != null)
         {
-            heldObject.transform.SetParent(null);           // Detach from player
+            heldObject.transform.SetParent(null); // Detach from player
 
             heldObject.GetComponent<PickupItem>().isHeld = false; // Mark as not held
 
             if (heldRb != null)
             {
-                heldRb.isKinematic = false;                 // Re-enable physics
+                heldRb.isKinematic = false; // Re-enable physics
+
+                // Apply throw force
+                Vector3 throwDirection = Camera.main.transform.forward;
+                heldRb.AddForce(
+                    throwDirection * throwForce + Vector3.up * upwardForce,
+                    ForceMode.Impulse
+                );
             }
 
             // Re-enable colliders if you disabled them earlier
@@ -110,7 +121,7 @@ public class PlayerPickupSystem : MonoBehaviour
             }
             */
 
-            heldObject = null;                              // Clear references
+            heldObject = null;
             heldRb = null;
         }
     }
