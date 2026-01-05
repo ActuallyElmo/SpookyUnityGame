@@ -4,6 +4,7 @@ public class PlayerPickupSystem : MonoBehaviour
 {
     public Transform holdPoint;                      // Point where the picked-up object will be held in front of the player
     public float pickUpRange = 3f;                   // Maximum distance the player can pick up an object
+    private PickupItem currentHoverItem;
 
     private GameObject heldObject;                   // Reference to the currently held object
     private Rigidbody heldRb;                        // Rigidbody of the held object
@@ -20,6 +21,7 @@ public class PlayerPickupSystem : MonoBehaviour
 
     void Update()
     {
+        CheckHover();
         // Only run if input handler exists
         if (inputHandler != null)
         {
@@ -38,6 +40,37 @@ public class PlayerPickupSystem : MonoBehaviour
                 if (heldObject != null)
                     DropObject();
             }
+        }
+    }
+
+    void CheckHover()
+    {
+        // Ray from the center of the screen (player view)
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+
+        int layerMask = LayerMask.GetMask("Interactable");
+
+        if (Physics.Raycast(ray, out RaycastHit hit, pickUpRange, layerMask))
+        {
+            PickupItem item = hit.collider.GetComponent<PickupItem>();
+
+            // Valid interactable object under crosshair
+            if (item != null && !item.isHeld)
+            {
+                if (currentHoverItem != item)
+                {
+                    currentHoverItem = item;
+                    HudController.Instance.EnableInteractionText("(E)", item.displayName);
+                }
+                return;
+            }
+        }
+
+        // No interactable object in view -> hide UI
+        if (currentHoverItem != null)
+        {
+            currentHoverItem = null;
+            HudController.Instance.DisableInteractionText();
         }
     }
 
