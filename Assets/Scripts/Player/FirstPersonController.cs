@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class FirstPersonController : MonoBehaviour
@@ -26,7 +27,7 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private Camera mainCamera;                        // Player camera
     [SerializeField] private PlayerInputHandler playerInputHandler;    // Custom input wrapper
 
-    private Vector3 currentMovement;           // Stores movement values
+    public Vector3 currentMovement;           // Stores movement values
     private float verticalRotation;            // Tracks camera pitch
     private float targetHeight;                
     private float heightVelocity;              // Reserved for smooth transitions
