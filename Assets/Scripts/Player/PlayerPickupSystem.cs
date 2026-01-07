@@ -6,7 +6,7 @@ public class PlayerPickupSystem : MonoBehaviour
     public float pickUpRange = 3f;                   // Maximum distance the player can pick up an object
     private PickupItem currentHoverItem;
 
-    private GameObject heldObject;                   // Reference to the currently held object
+    public GameObject heldObject;                   // Reference to the currently held object
     private Rigidbody heldRb;                        // Rigidbody of the held object
     private PlayerInputHandler inputHandler;         // Handles player input for picking/dropping
 
@@ -100,7 +100,7 @@ public class PlayerPickupSystem : MonoBehaviour
         }
     }
 
-    void PickUpObject(GameObject obj)
+    public void PickUpObject(GameObject obj)
     {
         heldObject = obj;                                     // Store reference to held object
         heldRb = obj.GetComponent<Rigidbody>();               // Get its Rigidbody

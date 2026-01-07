@@ -4,7 +4,7 @@ public class DoorController : MonoBehaviour
 {
     private Animator doorAnimator;
 
-    private bool isOpen = false;
+    public bool isOpen = false;
 
     private void Awake()
     {
@@ -15,14 +15,29 @@ public class DoorController : MonoBehaviour
     {
         if(isOpen)
         {
-            doorAnimator.Play("DoorClose");
             isOpen = false;
         }
         else
         {
-            doorAnimator.Play("DoorOpen");
             isOpen = true;
         }
 
+        UpdateDoorState();
+
+    }
+
+    public void UpdateDoorState()
+    {
+        if(doorAnimator == null)
+            return;
+            
+        if(isOpen)
+        {
+            doorAnimator.SetTrigger("Open");
+        }
+        else
+        {
+            doorAnimator.SetTrigger("Close");
+        }
     }
 }
