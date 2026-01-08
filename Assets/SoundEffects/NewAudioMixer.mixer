@@ -1,5 +1,38 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!244 &-8292479061642632703
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 53cddd9759cc37f47a070a6c54179bb0
+  m_EffectName: Attenuation
+  m_MixLevel: 0bac2c3e89802a54caf230e3f39ed996
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!243 &-4082950442616747007
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Background Music
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: b8754f36bc3fc0a4ebc0659d20141fbc
+  m_Children: []
+  m_Volume: a769417ad9fdf6448a3d5c1e0bd14cdf
+  m_Pitch: 9b4b7f115c5f5bf4eb11c415b42df2b4
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -8292479061642632703}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!244 &-2040354606771228753
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -76,6 +109,7 @@ AudioMixerController:
   - guids:
     - 2a11adf5d13a4e848ae9b10d0b9a5d2a
     - d1cafb3bc8d4e9540a2973433edc5e0f
+    - b8754f36bc3fc0a4ebc0659d20141fbc
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -90,6 +124,7 @@ AudioMixerGroupController:
   m_GroupID: 2a11adf5d13a4e848ae9b10d0b9a5d2a
   m_Children:
   - {fileID: 5770193225220199184}
+  - {fileID: -4082950442616747007}
   m_Volume: c7ce29d7e1e51bb4f86419c11ffc4fd7
   m_Pitch: 9c674f16d108cc9499427955c2c1350d
   m_Send: 00000000000000000000000000000000
@@ -125,7 +160,7 @@ AudioMixerSnapshotController:
   m_FloatValues:
     460b7380988517447ad971623986bcad: 0
     95408692d3d7f744c8a0abad7b1c56c8: 0
-    ef0851a2af45ff540bc9fb8ad4b61714: -3.5090396
+    ef0851a2af45ff540bc9fb8ad4b61714: -39.703533
     9c514104dda2cab40b0e418f59465af2: 0.23
     68ffbca74da0a8741984b7dfe6bb8879: 1867
     5a7afb48e8d51dd489dab0cee8b5acde: -2055
