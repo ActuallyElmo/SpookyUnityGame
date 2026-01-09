@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.IO;
+using UnityEngine;
+using UnityEngine.Audio;
 
 public class PlayerSettings : MonoBehaviour
 {
@@ -8,20 +9,48 @@ public class PlayerSettings : MonoBehaviour
     // Define the file name
     private string saveFileName = "playerSettings.json";
 
+    [Header("Mixer References")]
+    [SerializeField] AudioMixer audioMixer;
+
+    [SerializeField] AudioMixerGroup musicMixerGroup;
+    [SerializeField] AudioMixerGroup soundsMixerGroup;
+
+    private void setAudioMixerGroupVolume(AudioMixerGroup audioMixerGroup, int volume)
+    {
+        float sliderValue = volume / 100f;
+
+        float dBVolume = Mathf.Log10(Mathf.Clamp(sliderValue, 0.0001f, 1f)) * 20;
+
+        audioMixer.SetFloat(audioMixerGroup.name, dBVolume);
+        Debug.Log("Set " + dBVolume + " to " + audioMixerGroup.name);
+    }
+
+    private void UpdateAudioSettings()
+    {
+        setAudioMixerGroupVolume(musicMixerGroup, musicVolume);
+        setAudioMixerGroupVolume(soundsMixerGroup, soundsVolume);
+    }
+
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(this.gameObject);
-            
+
             // Auto-load settings when the game starts
-            LoadPlayerSettings(); 
+            LoadPlayerSettings();
+
         }
-        else if(instance != this)
+        else if (instance != this)
         {
             Destroy(this.gameObject);
         }
+    }
+
+    void Start()
+    {
+        UpdateAudioSettings();
     }
 
     // Default settings
