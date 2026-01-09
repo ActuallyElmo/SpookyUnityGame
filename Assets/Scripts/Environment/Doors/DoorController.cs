@@ -5,7 +5,7 @@ public class DoorController : MonoBehaviour
 {
     private Animator doorAnimator;
 
-    private bool isOpen = false;
+    public bool isOpen = false;
 
     [SerializeField] AudioClip openSound;
     [SerializeField] AudioClip closeSound;
@@ -19,15 +19,30 @@ public class DoorController : MonoBehaviour
     {
         if(isOpen)
         {
-            doorAnimator.Play("DoorClose");
             isOpen = false;
         }
         else
         {
-            doorAnimator.Play("DoorOpen");
             isOpen = true;
         }
 
+        UpdateDoorState();
+
+    }
+
+    public void UpdateDoorState()
+    {
+        if(doorAnimator == null)
+            return;
+            
+        if(isOpen)
+        {
+            doorAnimator.SetTrigger("Open");
+        }
+        else
+        {
+            doorAnimator.SetTrigger("Close");
+        }
     }
 
     public void PlayOpenSound()
