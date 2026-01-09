@@ -45,10 +45,9 @@ GameObject:
   - component: {fileID: 33090375624954126}
   - component: {fileID: 23947026841167588}
   - component: {fileID: 64743008532172070}
-  - component: {fileID: 6159166834002744739}
   m_Layer: 7
   m_Name: DoorD_Right
-  m_TagString: Door
+  m_TagString: DoubleDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -143,18 +142,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300004, guid: 386fb276c56b1794aa3cb06650db7b78, type: 3}
---- !u!114 &6159166834002744739
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1572667412200592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22fcf73a41b1aca4fbe6de0adff6158c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1742071369294280
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,10 +154,9 @@ GameObject:
   - component: {fileID: 33694364789543230}
   - component: {fileID: 23744017339569816}
   - component: {fileID: 64332218561538894}
-  - component: {fileID: 5315836375873552373}
   m_Layer: 7
   m_Name: DoorD_Left
-  m_TagString: Door
+  m_TagString: DoubleDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -265,18 +251,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: 386fb276c56b1794aa3cb06650db7b78, type: 3}
---- !u!114 &5315836375873552373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1742071369294280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22fcf73a41b1aca4fbe6de0adff6158c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1958764199621066
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,9 +370,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5679635785636688459}
   - component: {fileID: 2545267330814002443}
-  m_Layer: 0
+  - component: {fileID: 5249362184129493693}
+  m_Layer: 7
   m_Name: Doors
-  m_TagString: DoubleDoor
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -442,3 +417,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5249362184129493693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358945014637377559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22fcf73a41b1aca4fbe6de0adff6158c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openSound: {fileID: 8300000, guid: d2fe8aad3238bcd40937a98eb77a4611, type: 3}
+  closeSound: {fileID: 8300000, guid: 58263e658f2e1494c99147905ca18a8d, type: 3}

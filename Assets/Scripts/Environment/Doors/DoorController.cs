@@ -1,10 +1,14 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class DoorController : MonoBehaviour
 {
     private Animator doorAnimator;
 
     public bool isOpen = false;
+
+    [SerializeField] AudioClip openSound;
+    [SerializeField] AudioClip closeSound;
 
     private void Awake()
     {
@@ -39,5 +43,15 @@ public class DoorController : MonoBehaviour
         {
             doorAnimator.SetTrigger("Close");
         }
+    }
+
+    public void PlayOpenSound()
+    {
+        AudioManager.Instance.PlaySoundEffect(openSound, gameObject);
+    }
+
+    public void PlayCloseSound()
+    {
+        AudioManager.Instance.PlaySoundEffect(closeSound, gameObject);
     }
 }
