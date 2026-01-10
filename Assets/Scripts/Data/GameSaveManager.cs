@@ -15,6 +15,7 @@ public class SavedGameData
 
     //World state
     public int[] mapDoorStates;
+    public int[] mapLockerStates;
 
     public SavedGameData()
     {
@@ -23,6 +24,7 @@ public class SavedGameData
         playerPosition = Vector3.zero;
         flashlightPosition = Vector3.zero;
         mapDoorStates = new int[0];
+        mapLockerStates = new int[0];
     }
 }
 

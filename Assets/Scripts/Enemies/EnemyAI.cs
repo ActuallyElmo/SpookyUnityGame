@@ -19,10 +19,14 @@ public class EnemyAI : MonoBehaviour
     [Header("Patrol Parameters")]
     [SerializeField] private Transform[] patrolPoints;     
     [SerializeField] private float waitTimeAtPoint = 2f;   
-    [SerializeField] private bool randomizePatrol = true; // NEW: Toggle for random pathing
+    [SerializeField] private bool randomizePatrol = true; // Toggle for random pathing
 
     [Header("Search Parameters")]
     [SerializeField] private float searchDuration = 5f;    
+
+    [Header("Interaction Parameters")]
+    [SerializeField] private float doorInteractionRange = 1.5f; // Distance to check for doors
+    [SerializeField] private float doorCheckInterval = 0.5f;    // Frequency of door checks
 
     [Header("Dynamic Difficulty (New)")]
     [SerializeField] private int encounterCount = 0;       // How many times player was seen
@@ -35,6 +39,7 @@ public class EnemyAI : MonoBehaviour
     private int currentPatrolIndex = 0;
     private float waitTimer;
     private float searchTimer;
+    private float doorCheckTimer;                          // Timer for door checking
     private Vector3 lastKnownPosition;                     
 
     void Start()
@@ -72,6 +77,14 @@ public class EnemyAI : MonoBehaviour
     {
         if (playerTarget == null) return;
 
+        // Check for doors periodically
+        doorCheckTimer += Time.deltaTime;
+        if(doorCheckTimer >= doorCheckInterval)
+        {
+            CheckForDoors();
+            doorCheckTimer = 0f;
+        }
+
         // Detection Logic
         if (CanSeePlayer())
         {
@@ -95,6 +108,28 @@ public class EnemyAI : MonoBehaviour
             case EnemyState.Searching:
                 SearchBehavior();
                 break;
+        }
+    }
+
+    // Logic for opening doors while ignoring lockers
+    private void CheckForDoors()
+    {
+        // Create a check sphere in front of the enemy
+        Vector3 checkPosition = transform.position + transform.forward * 1.0f;
+        Collider[] hitColliders = Physics.OverlapSphere(checkPosition, doorInteractionRange);
+
+        foreach (var hit in hitColliders)
+        {
+            // Only interact with objects tagged "Door", ignore "Locker"
+            if (hit.CompareTag("Door"))
+            {
+                DoorController door = hit.GetComponent<DoorController>();
+                
+                if (door != null && !door.isOpen)
+                {
+                    door.PlayAnimation();
+                }
+            }
         }
     }
 
@@ -215,6 +250,11 @@ public class EnemyAI : MonoBehaviour
         Vector3 viewAngleB = DirFromAngle(fieldOfViewAngle / 2, false);
         Gizmos.DrawLine(transform.position, transform.position + viewAngleA * detectionRadius);
         Gizmos.DrawLine(transform.position, transform.position + viewAngleB * detectionRadius);
+
+        // Visualizes door interaction range
+        Gizmos.color = Color.blue;
+        Vector3 doorCheckPos = transform.position + transform.forward * 1.0f;
+        Gizmos.DrawWireSphere(doorCheckPos, doorInteractionRange);
     }
 
     private Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
