@@ -105,7 +105,8 @@ public class PlayerPickupSystem : MonoBehaviour
         heldObject = obj;                                     // Store reference to held object
         heldRb = obj.GetComponent<Rigidbody>();               // Get its Rigidbody
 
-        obj.GetComponent<PickupItem>().isHeld = true;         // Mark as held
+        PickupItem item = obj.GetComponent<PickupItem>();
+        item.isHeld = true;                                   // Mark as held
 
         if (heldRb != null)
         {
@@ -122,8 +123,8 @@ public class PlayerPickupSystem : MonoBehaviour
         */
 
         obj.transform.SetParent(holdPoint);                  // Attach it to the hold point
-        obj.transform.localPosition = Vector3.zero;          // Reset position to hold point
-        obj.transform.localRotation = Quaternion.Euler(new Vector3(90, 0, 90)); // Adjust rotation if needed
+        obj.transform.localPosition = item.holdOffset;       // Apply per-item position offset
+        obj.transform.localRotation = Quaternion.Euler(item.holdRotation);  // Apply per-item rotation
     }
 
     void DropObject()

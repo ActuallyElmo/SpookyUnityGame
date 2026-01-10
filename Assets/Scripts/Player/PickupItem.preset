@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PickupItem
+  m_TargetType:
+    m_NativeTypeID: 114
+    m_ManagedTypePPtr: {fileID: 11500000, guid: 4127469b9775c214ba9e14b0c4abfe51, type: 3}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_Enabled
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorHideFlags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorClassIdentifier
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: isHeld
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: displayName
+    value: BoilerRoom Key
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdOffset.x
+    value: -0.19
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdOffset.y
+    value: 0.09
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdOffset.z
+    value: -0.12
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRotation.x
+    value: 160.23
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRotation.y
+    value: 106.7
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRotation.z
+    value: 20.15
+    objectReference: {fileID: 0}
+  m_ExcludedProperties: []
+  m_CoupledType:
+    m_NativeTypeID: 0
+    m_ManagedTypePPtr: {fileID: 0}
+    m_ManagedTypeFallback: 
+  m_CoupledProperties: []
