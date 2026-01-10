@@ -3872,6 +3872,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38fa0bcbb956a644fb12b20d34e357b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 720abc0f41efb224dac51c62b933d980, type: 2}
+  musicMixerGroup: {fileID: -4082950442616747007, guid: 720abc0f41efb224dac51c62b933d980, type: 2}
+  soundsMixerGroup: {fileID: 5770193225220199184, guid: 720abc0f41efb224dac51c62b933d980, type: 2}
   musicVolume: 50
   soundsVolume: 50
 --- !u!4 &762341776
