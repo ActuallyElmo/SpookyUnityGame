@@ -1706,7 +1706,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 75220801c0019b540b28c40b64f2c2be, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.015
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -4381,6 +4381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ece44becb1a9ee4a8532215e84079fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  footstepSoundVolume: 0.048
   footstepSound: {fileID: 8300000, guid: b0a77b995ea56f4418c938d66439b6fc, type: 3}
   footstepsMixerGroup: {fileID: 5770193225220199184, guid: 720abc0f41efb224dac51c62b933d980, type: 2}
 --- !u!1 &879359844

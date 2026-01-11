@@ -8,6 +8,9 @@ public class PlayerSoundManager : MonoBehaviour
     private const float footstepSoundDelay = 0.5f;
     private FirstPersonController firstPersonController;
 
+    [Range(0f, 1f)]
+    public float footstepSoundVolume;
+
     [SerializeField] private AudioClip footstepSound;
     [SerializeField] private AudioMixerGroup footstepsMixerGroup;
 
@@ -31,7 +34,7 @@ public class PlayerSoundManager : MonoBehaviour
     private IEnumerator PlayFootsteps()
     {
         isPlaying = true;
-        AudioManager.Instance.PlaySoundEffect(footstepSound, gameObject, footstepsMixerGroup);
+        AudioManager.Instance.PlaySoundEffect(footstepSound, gameObject, footstepSoundVolume, footstepsMixerGroup);
 
         yield return new WaitForSeconds(footstepSoundDelay);
 
