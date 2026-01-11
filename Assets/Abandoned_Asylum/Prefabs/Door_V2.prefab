@@ -287,5 +287,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22fcf73a41b1aca4fbe6de0adff6158c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOpen: 0
   openSound: {fileID: 8300000, guid: d2fe8aad3238bcd40937a98eb77a4611, type: 3}
   closeSound: {fileID: 8300000, guid: 58263e658f2e1494c99147905ca18a8d, type: 3}

@@ -60,7 +60,8 @@ public class GameSceneManager : MonoBehaviour
 
             //Restore world state
             yield return new WaitForEndOfFrame();
-            LoadDoorStates(saveData);
+            LoadObjectStates("Door", saveData.mapDoorStates);
+            LoadObjectStates("Locker", saveData.mapLockerStates);
         }
         else
         {
@@ -74,24 +75,21 @@ public class GameSceneManager : MonoBehaviour
         StartCoroutine(AutomaticallySaveGame());
     }
 
-    private void LoadDoorStates(SavedGameData data)
+    private void LoadObjectStates(string tag, int[] states)
     {
-        if (data.mapDoorStates == null || data.mapDoorStates.Length == 0) return;
+        if (states == null || states.Length == 0) return;
 
-        GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
+        List<GameObject> sortedObjects = GetSortedObjects(tag);
 
-        Vector3 playerPos = PlayerSingleton.instance.transform.position;
-        List<GameObject> sortedDoors = doors.OrderBy(d => Vector3.Distance(playerPos, d.transform.position)).ToList();
-
-        for (int i = 0; i < sortedDoors.Count; i++)
+        for (int i = 0; i < sortedObjects.Count; i++)
         {
-            if (i >= data.mapDoorStates.Length) break;
+            if (i >= states.Length) break;
 
-            var doorScript = sortedDoors[i].GetComponent<DoorController>(); 
+            var doorScript = sortedObjects[i].GetComponent<DoorController>(); 
             
             if(doorScript != null)
             {
-                bool shouldBeOpen = (data.mapDoorStates[i] == 1);
+                bool shouldBeOpen = (states[i] == 1);
                 doorScript.isOpen = shouldBeOpen; 
                 doorScript.UpdateDoorState();
             }
@@ -127,29 +125,34 @@ public class GameSceneManager : MonoBehaviour
             PlayerSingleton.instance.GetComponent<PlayerPickupSystem>().heldObject.transform.position = oldPosition;
         }
 
-
         //World state
-        int[] nearbyDoors = new int[50];
-        GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
-
-        Vector3 playerPos = PlayerSingleton.instance.transform.position;
-        List<GameObject> sortedDoors = doors.OrderBy(d => Vector3.Distance(playerPos, d.transform.position)).ToList();
-
-        GameSaveManager.instance.currentSaveData.mapDoorStates = new int[sortedDoors.Count];
-
-        for (int i = 0; i < sortedDoors.Count; i++)
-        {
-            var doorScript = sortedDoors[i].GetComponent<DoorController>(); 
-            
-            // 1 if open, 0 if closed
-            if(doorScript != null)
-            {
-                GameSaveManager.instance.currentSaveData.mapDoorStates[i] = doorScript.isOpen ? 1 : 0; 
-            }
-        }
-
+        GameSaveManager.instance.currentSaveData.mapDoorStates = GetStatesForTag("Door");
+        GameSaveManager.instance.currentSaveData.mapLockerStates = GetStatesForTag("Locker");
 
         GameSaveManager.instance.SaveGame();
     }
 
+    private int[] GetStatesForTag(string tag)
+    {
+        List<GameObject> sortedObjects = GetSortedObjects(tag);
+        int[] states = new int[sortedObjects.Count];
+
+        for (int i = 0; i < sortedObjects.Count; i++)
+        {
+            var doorScript = sortedObjects[i].GetComponent<DoorController>();
+            if(doorScript != null)
+            {
+                states[i] = doorScript.isOpen ? 1 : 0;
+            }
+        }
+        return states;
+    }
+
+    private List<GameObject> GetSortedObjects(string tag)
+    {
+        GameObject[] objects = GameObject.FindGameObjectsWithTag(tag);
+        
+        Vector3 playerPos = PlayerSingleton.instance.transform.position;
+        return objects.OrderBy(d => Vector3.Distance(playerPos, d.transform.position)).ToList();
+    }
 }

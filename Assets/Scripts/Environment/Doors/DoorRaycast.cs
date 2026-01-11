@@ -20,6 +20,7 @@ public class DoorRaycast : MonoBehaviour
 
     private const string doorTag = "Door";
     private const string doubleDoorTag = "DoubleDoor";
+    private const string lockerTag = "Locker";
     private DoorController raycastedDoor = null;
 
     private void Awake()
@@ -35,7 +36,7 @@ public class DoorRaycast : MonoBehaviour
 
         if(Physics.Raycast(transform.position, transform.forward, out hit, rayDistance))
         {
-            if (hit.collider.CompareTag(doorTag))
+            if (hit.collider.CompareTag(doorTag) || hit.collider.CompareTag(lockerTag))
             {
                 if (!raycastedDoor)
                 {

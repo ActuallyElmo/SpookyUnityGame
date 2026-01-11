@@ -8,6 +8,7 @@ TagManager:
   - HiddenLocation
   - Door
   - DoubleDoor
+  - Locker
   layers:
   - Default
   - TransparentFX
@@ -20,8 +21,6 @@ TagManager:
   - Interactable
   - Map
   - InteractObjects
-  - 
-  - 
   - 
   - 
   - 
