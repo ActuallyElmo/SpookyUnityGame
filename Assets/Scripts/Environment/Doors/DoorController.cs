@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using System.Collections;
 
 public class DoorController : MonoBehaviour
 {
@@ -10,12 +11,15 @@ public class DoorController : MonoBehaviour
     [SerializeField] AudioClip openSound;
     [SerializeField] AudioClip closeSound;
 
+    [SerializeField] public GameObject neededKey = null;
+    [SerializeField] public bool isLocked = false;
+
     private void Awake()
     {
         doorAnimator = GetComponent<Animator>();
     }
 
-    public void PlayAnimation()
+    private void PlayAnimation()
     {
         if(isOpen)
         {
@@ -43,6 +47,33 @@ public class DoorController : MonoBehaviour
         {
             doorAnimator.SetTrigger("Close");
         }
+    }
+
+    private IEnumerator DisplayLockedMessage()
+    {
+        const int displaySeconds = 2;
+
+        HudController.Instance.EnableInteractionText("You need a key for this door", "");
+        yield return new WaitForSeconds(displaySeconds);
+        HudController.Instance.DisableInteractionText();
+    }
+
+    public void Interact()
+    {
+        if(neededKey != null)
+        {
+            PickupItem pickupItemKey = neededKey.GetComponent<PickupItem>();
+            if (isLocked && !pickupItemKey.isHeld)
+            {
+                StartCoroutine(DisplayLockedMessage());
+                return;
+            }
+            
+        }
+
+        isLocked = false;
+
+        PlayAnimation();
     }
 
     public void PlayOpenSound()

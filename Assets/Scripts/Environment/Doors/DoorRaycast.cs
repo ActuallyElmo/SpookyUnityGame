@@ -45,7 +45,7 @@ public class DoorRaycast : MonoBehaviour
 
                 if (interactAction.WasPressedThisFrame())
                 {
-                    raycastedDoor.PlayAnimation();
+                    raycastedDoor.Interact();
                 }
             }
             else if (hit.collider.CompareTag(doubleDoorTag))
@@ -59,7 +59,7 @@ public class DoorRaycast : MonoBehaviour
 
                 if (interactAction.WasPressedThisFrame())
                 {
-                    raycastedDoor.PlayAnimation();
+                    raycastedDoor.Interact();
                 }
             }
         }
