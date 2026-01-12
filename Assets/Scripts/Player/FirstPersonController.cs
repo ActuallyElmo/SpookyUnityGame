@@ -33,6 +33,8 @@ public class FirstPersonController : MonoBehaviour
     private float heightVelocity;              // Reserved for smooth transitions
     private bool isCrouching = false;          // Crouch state
 
+    public static bool movementDisabled = false;
+
     // Computes final movement speed based on sprint or crouch
     private float currentSpeed =>
         walkSpeed * (playerInputHandler.SprintTriggered && !isCrouching ? sprintMultiplier :
@@ -47,6 +49,10 @@ public class FirstPersonController : MonoBehaviour
 
     void Update()
     {
+        if (movementDisabled)
+        {
+            return;
+        }
         HandleCrouching();
         HandleMovement();
         HandleRotation();
