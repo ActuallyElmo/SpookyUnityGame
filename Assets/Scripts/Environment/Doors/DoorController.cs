@@ -14,12 +14,14 @@ public class DoorController : MonoBehaviour
     [SerializeField] public GameObject neededKey = null;
     [SerializeField] public bool isLocked = false;
 
+    Coroutine warningCoroutine = null;
+
     private void Awake()
     {
         doorAnimator = GetComponent<Animator>();
     }
 
-    private void PlayAnimation()
+    public void PlayAnimation()
     {
         if(isOpen)
         {
@@ -51,11 +53,12 @@ public class DoorController : MonoBehaviour
 
     private IEnumerator DisplayLockedMessage()
     {
-        const int displaySeconds = 2;
+        const int displaySeconds = 1;
 
         HudController.Instance.EnableInteractionText("You need a key for this door", "");
-        yield return new WaitForSeconds(displaySeconds);
+        yield return new WaitForSecondsRealtime(displaySeconds);
         HudController.Instance.DisableInteractionText();
+        warningCoroutine = null;
     }
 
     public void Interact()
@@ -65,7 +68,9 @@ public class DoorController : MonoBehaviour
             PickupItem pickupItemKey = neededKey.GetComponent<PickupItem>();
             if (isLocked && !pickupItemKey.isHeld)
             {
-                StartCoroutine(DisplayLockedMessage());
+                if(warningCoroutine == null)
+                    warningCoroutine = StartCoroutine(DisplayLockedMessage());
+
                 return;
             }
             

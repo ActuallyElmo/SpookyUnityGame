@@ -31,8 +31,12 @@ public class ItemsInteract : MonoBehaviour
             
         }
         else {
-            foundObject = null;
-            HudController.Instance.DisableInteractionText();
+            
+            if(foundObject != null)
+            {
+                foundObject = null;
+                HudController.Instance.DisableInteractionText();
+            }
         }
     }
 
