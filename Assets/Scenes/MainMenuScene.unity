@@ -7789,6 +7789,8 @@ MonoBehaviour:
   runSpeed: 6
   detectionRadius: 10
   fieldOfViewAngle: 60
+  eyeHeight: 1.5
+  playerHeightOffset: 1
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
