@@ -4,7 +4,7 @@ using System.Collections;
 
 public class EnemyAI : MonoBehaviour
 {
-    private enum EnemyState { Patrolling, Chasing, Searching, InteractingWithDoor }
+    private enum EnemyState { Patrolling, Chasing, Searching, InteractingWithDoor, GameOver }
 
     [Header("Settings")]
     [SerializeField] private EnemyState currentState;
