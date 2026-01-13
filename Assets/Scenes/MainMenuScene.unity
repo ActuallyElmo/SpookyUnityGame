@@ -3996,6 +3996,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHeld: 0
   displayName: Crowbar
+  holdOffset: {x: 0, y: 0, z: 0}
+  holdRotation: {x: 0, y: 0, z: 0}
 --- !u!54 &776362520
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16922,6 +16924,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHeld: 0
   displayName: Wrench
+  holdOffset: {x: -0.01, y: 0.06, z: -0.15}
+  holdRotation: {x: 69.44, y: -78.29, z: 20.33}
 --- !u!65 &1811070241
 BoxCollider:
   m_ObjectHideFlags: 0

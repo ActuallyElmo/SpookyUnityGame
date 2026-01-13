@@ -192,6 +192,30 @@ PrefabInstance:
       propertyPath: displayName
       value: Padlock Key
       objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdOffset.x
+      value: -0.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdOffset.y
+      value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdOffset.z
+      value: -0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdRotation.x
+      value: 160.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdRotation.y
+      value: 106.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdRotation.z
+      value: 20.15
+      objectReference: {fileID: 0}
     - target: {fileID: 4723547211238572199, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -1036,7 +1060,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
       propertyPath: displayName
-      value: StockRoom Key
+      value: Stock Room Key
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdOffset.x
+      value: -0.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdOffset.y
+      value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdOffset.z
+      value: -0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdRotation.x
+      value: 160.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdRotation.y
+      value: 106.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdRotation.z
+      value: 20.15
       objectReference: {fileID: 0}
     - target: {fileID: 4723547211238572199, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
       propertyPath: m_Layer
@@ -3391,6 +3439,30 @@ PrefabInstance:
       propertyPath: displayName
       value: Basement Key
       objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdOffset.x
+      value: -0.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdOffset.y
+      value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdOffset.z
+      value: -0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdRotation.x
+      value: 160.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdRotation.y
+      value: 106.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdRotation.z
+      value: 20.15
+      objectReference: {fileID: 0}
     - target: {fileID: 4723547211238572199, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -3541,6 +3613,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHeld: 0
   displayName: Flashlight
+  holdOffset: {x: 0, y: 0, z: 0}
+  holdRotation: {x: 0, y: 0, z: 90}
 --- !u!54 &749939816
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3701,6 +3775,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHeld: 0
   displayName: Crowbar
+  holdOffset: {x: -0.13, y: 0.02, z: -0.1}
+  holdRotation: {x: 38.85, y: 95.74, z: 53.02}
 --- !u!54 &776362520
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8215,6 +8291,30 @@ PrefabInstance:
     - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
       propertyPath: displayName
       value: Classroom Key
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdOffset.x
+      value: -0.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdOffset.y
+      value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdOffset.z
+      value: -0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdRotation.x
+      value: 160.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdRotation.y
+      value: 106.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdRotation.z
+      value: 20.15
       objectReference: {fileID: 0}
     - target: {fileID: 4723547211238572199, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
       propertyPath: m_Layer
@@ -15958,6 +16058,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deeb0e349992fd74a82ef6e7a77fcca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isKeyLocked: 1
+  isLockpadLocked: 1
+  isKeypadLocked: 1
+  planksNumber: 2
   masterKey: {fileID: 3663255208826164732}
 --- !u!54 &1751436943
 Rigidbody:
@@ -16249,6 +16353,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHeld: 0
   displayName: Wrench
+  holdOffset: {x: -0.01, y: 0.06, z: -0.15}
+  holdRotation: {x: 69.44, y: -78.29, z: 20.33}
 --- !u!65 &1811070241
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17274,7 +17380,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
       propertyPath: displayName
-      value: BoilerRoom Key
+      value: Boiler Room Key
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdOffset.x
+      value: -0.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdOffset.y
+      value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdOffset.z
+      value: -0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdRotation.x
+      value: 160.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdRotation.y
+      value: 106.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663255210342374552, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: holdRotation.z
+      value: 20.15
       objectReference: {fileID: 0}
     - target: {fileID: 4723547211238572199, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
       propertyPath: m_Layer
@@ -18185,6 +18315,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHeld: 0
   displayName: Master Key
+  holdOffset: {x: -0.19, y: 0.09, z: -0.12}
+  holdRotation: {x: 160.23, y: 106.7, z: 20.15}
 --- !u!23 &3667994810835177001
 MeshRenderer:
   m_ObjectHideFlags: 0
