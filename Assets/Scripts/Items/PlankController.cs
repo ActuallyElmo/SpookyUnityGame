@@ -7,9 +7,10 @@ public class PlankController : MonoBehaviour, IInteractable
 
     private string noCrowbarMessage = "You need a crowbar for this!";
 
-    void Start()
+    void Awake()
     {
         crowbarItem = crowbarObject.GetComponent<PickupItem>();
+        
     }
     public void Interact()
     {
