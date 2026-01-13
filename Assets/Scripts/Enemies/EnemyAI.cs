@@ -13,33 +13,36 @@ public class EnemyAI : MonoBehaviour
     [Header("Detection Parameters")]
     [SerializeField] private float detectionRadius = 10f;  
     [SerializeField] private float fieldOfViewAngle = 60f; 
+    [SerializeField] private float eyeHeight = 1.5f;          // Height of the enemy's eyes
+    [SerializeField] private float playerHeightOffset = 1.0f; // Target height offset on the player (e.g., chest level)
     [SerializeField] private LayerMask playerLayer;        
     [SerializeField] private LayerMask obstacleLayer;      
 
     [Header("Patrol Parameters")]
     [SerializeField] private Transform[] patrolPoints;     
     [SerializeField] private float waitTimeAtPoint = 2f;   
-    [SerializeField] private bool randomizePatrol = true; // Toggle for random pathing
+    [SerializeField] private bool randomizePatrol = true; 
 
     [Header("Search Parameters")]
     [SerializeField] private float searchDuration = 5f;    
 
     [Header("Interaction Parameters")]
-    [SerializeField] private float doorInteractionRange = 1.5f; // Distance to check for doors
-    [SerializeField] private float doorCheckInterval = 0.5f;    // Frequency of door checks
+    [SerializeField] private float doorInteractionRange = 1.5f; 
+    [SerializeField] private float doorCheckInterval = 0.5f;    
 
-    [Header("Dynamic Difficulty (New)")]
-    [SerializeField] private int encounterCount = 0;       // How many times player was seen
-    [SerializeField] private float rageMultiplier = 1.1f;  // Stats increase by 10% per encounter
-    [SerializeField] private float maxSpeedCap = 9.0f;     // Limit so he doesn't become Sonic
+    [Header("Dynamic Difficulty")]
+    [SerializeField] private int encounterCount = 0;       
+    [SerializeField] private float rageMultiplier = 1.1f;  
+    [SerializeField] private float maxSpeedCap = 9.0f;     
 
     [Header("References")]
     private NavMeshAgent agent;
     private Transform playerTarget;
     private int currentPatrolIndex = 0;
+    private float pathUpdateTimer = 0f;                    // Timer for path update optimization
     private float waitTimer;
     private float searchTimer;
-    private float doorCheckTimer;                          // Timer for door checking
+    private float doorCheckTimer;                          
     private Vector3 lastKnownPosition;                     
 
     void Start()
@@ -51,7 +54,6 @@ public class EnemyAI : MonoBehaviour
             playerTarget = PlayerSingleton.instance.transform;
         }
 
-        // Validate NavMesh placement and snap agent to surface
         NavMeshHit hit;
         if (NavMesh.SamplePosition(transform.position, out hit, 5.0f, NavMesh.AllAreas)) 
         {
@@ -64,7 +66,6 @@ public class EnemyAI : MonoBehaviour
             return;
         }
 
-        // Pick a random start point if randomized
         if (randomizePatrol && patrolPoints.Length > 0)
         {
             currentPatrolIndex = Random.Range(0, patrolPoints.Length);
@@ -77,7 +78,6 @@ public class EnemyAI : MonoBehaviour
     {
         if (playerTarget == null) return;
 
-        // Check for doors periodically
         doorCheckTimer += Time.deltaTime;
         if(doorCheckTimer >= doorCheckInterval)
         {
@@ -111,16 +111,13 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    // Logic for opening doors while ignoring lockers
     private void CheckForDoors()
     {
-        // Create a check sphere in front of the enemy
         Vector3 checkPosition = transform.position + transform.forward * 1.0f;
         Collider[] hitColliders = Physics.OverlapSphere(checkPosition, doorInteractionRange);
 
         foreach (var hit in hitColliders)
         {
-            // Only interact with objects tagged "Door", ignore "Locker"
             if (hit.CompareTag("Door"))
             {
                 DoorController door = hit.GetComponent<DoorController>();
@@ -136,14 +133,12 @@ public class EnemyAI : MonoBehaviour
     private void IncreaseAggression()
     {
         encounterCount++;
-        Debug.Log($"Enemy Enraged! Encounter count: {encounterCount}");
+        // Debug.Log($"Enemy Enraged! Encounter count: {encounterCount}");
 
-        // Increase speeds but clamp to max limit
         walkSpeed = Mathf.Min(walkSpeed * rageMultiplier, maxSpeedCap);
         runSpeed = Mathf.Min(runSpeed * rageMultiplier, maxSpeedCap);
         
-        // Increase senses
-        detectionRadius = Mathf.Min(detectionRadius * 1.1f, 20f); // Cap vision at 20m
+        detectionRadius = Mathf.Min(detectionRadius * 1.1f, 20f); 
         searchDuration += 1.0f; 
     }
 
@@ -184,7 +179,21 @@ public class EnemyAI : MonoBehaviour
     private void ChaseBehavior()
     {
         agent.speed = runSpeed;
-        agent.SetDestination(playerTarget.position);
+
+        // Prevent path updates while traversing OffMeshLinks
+        if (agent.isOnOffMeshLink)
+        {
+            return;
+        }
+
+        // Limit path updates to prevent stuttering on NavMeshLinks
+        pathUpdateTimer += Time.deltaTime;
+        
+        if (pathUpdateTimer > 0.2f) 
+        {
+            agent.SetDestination(playerTarget.position);
+            pathUpdateTimer = 0f;
+        }
 
         if (!CanSeePlayer())
         {
@@ -195,8 +204,7 @@ public class EnemyAI : MonoBehaviour
         
         if (Vector3.Distance(transform.position, playerTarget.position) < 1.5f)
         {
-            // Placeholder for attack logic
-            Debug.Log("Player caught.");
+            // Debug.Log("Player caught.");
         }
     }
 
@@ -211,7 +219,6 @@ public class EnemyAI : MonoBehaviour
             if (searchTimer > searchDuration)
             {
                 currentState = EnemyState.Patrolling;
-                // Go to the nearest patrol point instead of random to look smarter
                 agent.SetDestination(patrolPoints[currentPatrolIndex].position);
             }
         }
@@ -221,20 +228,33 @@ public class EnemyAI : MonoBehaviour
     {
         if (playerTarget == null) return false;
 
-        Vector3 enemyEyes = transform.position + Vector3.up * 1.6f;
-        Vector3 playerCenter = playerTarget.position + Vector3.up * 1.6f;
+        Vector3 enemyEyes = transform.position + Vector3.up * eyeHeight;
+        Vector3 targetPoint = playerTarget.position + Vector3.up * playerHeightOffset; 
 
-        Vector3 directionToPlayer = (playerCenter - enemyEyes).normalized;
+        Vector3 directionToPlayer = (targetPoint - enemyEyes).normalized;
         float distanceToPlayer = Vector3.Distance(transform.position, playerTarget.position);
 
         if (distanceToPlayer < detectionRadius)
         {
-            if (Vector3.Angle(transform.forward, directionToPlayer) < fieldOfViewAngle / 2)
+            // Calculate angle on the horizontal plane (ignoring height)
+            Vector3 flatForward = transform.forward; flatForward.y = 0;
+            Vector3 flatDir = directionToPlayer; flatDir.y = 0;
+
+            if (Vector3.Angle(flatForward, flatDir) < fieldOfViewAngle / 2)
             {
-                if (!Physics.Raycast(enemyEyes, directionToPlayer, distanceToPlayer, obstacleLayer))
+                RaycastHit hit;
+                
+                // Perform 3D raycast for visibility check
+                if (Physics.Raycast(enemyEyes, directionToPlayer, out hit, distanceToPlayer, obstacleLayer, QueryTriggerInteraction.Ignore))
                 {
-                    return true; 
+                    // Visual debug for blocked view
+                    Debug.DrawLine(enemyEyes, hit.point, Color.red);
+                    return false; 
                 }
+                
+                // Visual debug for clear line of sight
+                Debug.DrawLine(enemyEyes, targetPoint, Color.green); 
+                return true; 
             }
         }
         return false;
@@ -245,16 +265,27 @@ public class EnemyAI : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
         
+        // FOV Cone visualization
         Gizmos.color = Color.red;
         Vector3 viewAngleA = DirFromAngle(-fieldOfViewAngle / 2, false);
         Vector3 viewAngleB = DirFromAngle(fieldOfViewAngle / 2, false);
         Gizmos.DrawLine(transform.position, transform.position + viewAngleA * detectionRadius);
         Gizmos.DrawLine(transform.position, transform.position + viewAngleB * detectionRadius);
 
-        // Visualizes door interaction range
         Gizmos.color = Color.blue;
         Vector3 doorCheckPos = transform.position + transform.forward * 1.0f;
         Gizmos.DrawWireSphere(doorCheckPos, doorInteractionRange);
+        
+        // Visualize eye height
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position + Vector3.up * eyeHeight, 0.1f);
+
+        // Visualize target position on player
+        if (playerTarget != null)
+        {
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawWireSphere(playerTarget.position + Vector3.up * playerHeightOffset, 0.1f);
+        }
     }
 
     private Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
