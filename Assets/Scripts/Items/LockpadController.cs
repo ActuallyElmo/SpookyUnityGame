@@ -3,7 +3,7 @@ using UnityEngine;
 public class LockpadController : MonoBehaviour, IInteractable
 {
     [SerializeField] GameObject neededKey;
-    [SerializeField] GameObject lockedDoor;
+    [SerializeField] FinalDoorController finalDoorController;
     private PickupItem key;
 
     private const string lockedMessage = "You need a key for this lockpad";
@@ -27,5 +27,6 @@ public class LockpadController : MonoBehaviour, IInteractable
         gameObject.GetComponent<Rigidbody>().isKinematic = false;
         gameObject.GetComponent<Rigidbody>().useGravity = true;
         gameObject.layer = 0;
+        finalDoorController.unlockLockpad();
     }
 }

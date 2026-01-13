@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlankController : MonoBehaviour, IInteractable
 {
     [SerializeField] GameObject crowbarObject;
+    [SerializeField] FinalDoorController finalDoorController;
     private PickupItem crowbarItem;
 
     private string noCrowbarMessage = "You need a crowbar for this!";
@@ -24,5 +25,6 @@ public class PlankController : MonoBehaviour, IInteractable
         rigidBody.isKinematic = false;
         rigidBody.useGravity = true;
         gameObject.layer = 0;
+        finalDoorController.dropPlank();
     }
 }

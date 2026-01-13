@@ -2054,14 +2054,14 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.0071706185}
   m_LocalScale: {x: 4409.61, y: 4409.61, z: 4409.61}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7194491359898508110}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -80.9, y: 276.5256}
-  m_SizeDelta: {x: -1919.9199, y: -851.6956}
+  m_AnchoredPosition: {x: -80.9, y: 351.1867}
+  m_SizeDelta: {x: -1919.9199, y: -702.3734}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7291072302328628814
 CanvasRenderer:
@@ -2156,7 +2156,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 64.7879, z: 0, w: 64.75539}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
