@@ -8,6 +8,7 @@ public class KeypadController : MonoBehaviour, IInteractable
     private KeypadUiController keypadUiController;
     [SerializeField] public string pin;
     [SerializeField] DoorController door;
+    [SerializeField] FinalDoorController finalDoorController;
 
     [SerializeField] AudioClip correctPinSound;
     private AudioSource audioSource;
@@ -51,6 +52,15 @@ public class KeypadController : MonoBehaviour, IInteractable
         audioSource.resource = correctPinSound;
         audioSource.Play();
         setInteractable(false);
-        door.isLocked = false;
+
+        if(finalDoorController != null)
+        {
+            finalDoorController.unlockKeypad();
+        }
+        else
+        {
+            door.isLocked = false;
+        }
+            
     }
 }
