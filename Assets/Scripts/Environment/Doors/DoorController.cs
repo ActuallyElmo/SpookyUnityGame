@@ -12,7 +12,7 @@ public class DoorController : MonoBehaviour
     [SerializeField] AudioClip closeSound;
 
     [SerializeField] public GameObject neededKey = null;
-    [SerializeField] public bool isLocked = false;
+    [SerializeField] public bool isLocked;
 
     Coroutine warningCoroutine = null;
 
@@ -63,6 +63,7 @@ public class DoorController : MonoBehaviour
 
     public void Interact()
     {
+        Debug.Log("---------------" + isLocked);
         if(neededKey != null)
         {
             PickupItem pickupItemKey = neededKey.GetComponent<PickupItem>();
@@ -73,12 +74,18 @@ public class DoorController : MonoBehaviour
 
                 return;
             }
+            else if (isLocked && pickupItemKey.isHeld)
+            {
+                isLocked = false;
+            }
             
         }
 
-        isLocked = false;
-
-        PlayAnimation();
+        if (!isLocked)
+        {
+            PlayAnimation();
+        }
+        
     }
 
     public void PlayOpenSound()
