@@ -90,11 +90,15 @@ public class DoorController : MonoBehaviour
 
     public void PlayOpenSound()
     {
+        if(GameSceneManager.instance.gameIsLoaded == false) return;
+
         AudioManager.Instance.PlaySoundEffect(openSound, gameObject);
     }
 
     public void PlayCloseSound()
     {
+        if(GameSceneManager.instance.gameIsLoaded == false) return;
+        
         AudioManager.Instance.PlaySoundEffect(closeSound, gameObject);
     }
 }

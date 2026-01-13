@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class DoorRaycast : MonoBehaviour
 {
-    [SerializeField] private int rayDistance = 5;
+    private float rayDistance = 1.5f;
     //[SerializeField] private LayerMask layerMask;
     //[SerializeField] private string excludeLayerName = null;
 

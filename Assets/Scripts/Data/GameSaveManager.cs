@@ -8,6 +8,8 @@ public class SavedGameData
     public bool isNewSave;
     public Vector3 playerPosition;
     public Vector3 playerRotation;
+    public Vector3 enemyPosition;
+    public Vector3 enemyRotation;
 
     //Game Progression
     public Vector3 flashlightPosition;

@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    private enum EnemyState { Patrolling, Chasing, Searching }
+    private enum EnemyState { Patrolling, Chasing, Searching, GameOver }
 
     [Header("Settings")]
     [SerializeField] private EnemyState currentState;
@@ -77,6 +77,7 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
+        if (currentState == EnemyState.GameOver) return;
         // Handle animation state based on agent velocity
         if (anim != null) 
         {
@@ -111,6 +112,8 @@ public class EnemyAI : MonoBehaviour
                 break;
             case EnemyState.Searching:
                 SearchBehavior();
+                break;
+            case EnemyState.GameOver: 
                 break;
         }
     }
@@ -196,8 +199,24 @@ public class EnemyAI : MonoBehaviour
         
         if (Vector3.Distance(transform.position, playerTarget.position) < 1.5f)
         {
-            // Debug.Log("Player caught.");
+            EndGame();
         }
+    }
+
+    private void EndGame()
+    {
+        if (currentState == EnemyState.GameOver) return;
+
+        currentState = EnemyState.GameOver;
+
+        agent.isStopped = true;
+        agent.velocity = Vector3.zero;
+
+        if (anim != null) anim.SetBool("isWalking", false);
+
+        PlayerSingleton.instance.GetComponent<PlayerDeathHandler>().OnDeath();
+
+        //Debug.Log("Game Over");
     }
 
     private void SearchBehavior()

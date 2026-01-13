@@ -21,6 +21,8 @@ TagManager:
   - Interactable
   - Map
   - InteractObjects
+  - CameraFX
+  - 
   - 
   - 
   - 
