@@ -7,8 +7,8 @@ public class EnemyAI : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private EnemyState currentState;
-    [SerializeField] private float walkSpeed = 3.5f;       
-    [SerializeField] private float runSpeed = 6.0f;        
+    [SerializeField] private float walkSpeed = 1.8f;   // Modified: Reduced speed for better animation sync
+    [SerializeField] private float runSpeed = 3.0f;    // Modified: Reduced speed for better animation sync
 
     [Header("Detection Parameters")]
     [SerializeField] private float detectionRadius = 10f;  
@@ -30,14 +30,12 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float doorInteractionRange = 1.5f; 
     [SerializeField] private float doorCheckInterval = 0.5f;    
 
-    [Header("Dynamic Difficulty")]
-    [SerializeField] private int encounterCount = 0;       
-    [SerializeField] private float rageMultiplier = 1.1f;  
-    [SerializeField] private float maxSpeedCap = 9.0f;     
+    // Removed Dynamic Difficulty header and variables as requested
 
     [Header("References")]
     private NavMeshAgent agent;
     private Transform playerTarget;
+    private Animator anim; // Reference to the child Animator component
     private int currentPatrolIndex = 0;
     private float pathUpdateTimer = 0f;                    // Timer for path update optimization
     private float waitTimer;
@@ -49,6 +47,9 @@ public class EnemyAI : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         
+        // Initialize Animator from the child object (the visual character)
+        anim = GetComponentInChildren<Animator>();
+
         if (PlayerSingleton.instance != null)
         {
             playerTarget = PlayerSingleton.instance.transform;
@@ -76,6 +77,14 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
+        // Handle animation state based on agent velocity
+        if (anim != null) 
+        {
+            // Check if the agent is moving significantly
+            bool isMoving = agent.velocity.magnitude > 0.1f;
+            anim.SetBool("isWalking", isMoving); 
+        }
+
         if (playerTarget == null) return;
 
         doorCheckTimer += Time.deltaTime;
@@ -88,12 +97,7 @@ public class EnemyAI : MonoBehaviour
         // Detection Logic
         if (CanSeePlayer())
         {
-            lastKnownPosition = playerTarget.position;
-            if (currentState != EnemyState.Chasing)
-            {
-                IncreaseAggression();
-            }
-
+            lastKnownPosition = playerTarget.position;            
             currentState = EnemyState.Chasing;
         }
 
@@ -128,18 +132,6 @@ public class EnemyAI : MonoBehaviour
                 }
             }
         }
-    }
-
-    private void IncreaseAggression()
-    {
-        encounterCount++;
-        // Debug.Log($"Enemy Enraged! Encounter count: {encounterCount}");
-
-        walkSpeed = Mathf.Min(walkSpeed * rageMultiplier, maxSpeedCap);
-        runSpeed = Mathf.Min(runSpeed * rageMultiplier, maxSpeedCap);
-        
-        detectionRadius = Mathf.Min(detectionRadius * 1.1f, 20f); 
-        searchDuration += 1.0f; 
     }
 
     private void PatrolBehavior()
