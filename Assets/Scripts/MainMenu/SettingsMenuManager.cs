@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 using TMPro;
 
 public class SettingsMenuManager : MonoBehaviour
@@ -8,6 +9,13 @@ public class SettingsMenuManager : MonoBehaviour
     public Slider musicSlider;
     public Slider soundSlider;
 
+    [Header("Mixer References")]
+    [SerializeField] AudioMixer audioMixer;
+
+    [SerializeField] AudioMixerGroup musicMixerGroup;
+    [SerializeField] AudioMixerGroup soundsMixerGroup;
+
+    
     public TMP_Text musicValueText;
     public TMP_Text soundValueText;
 
@@ -36,6 +44,16 @@ public class SettingsMenuManager : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
+
+    private void setAudioMixerGroupVolume(AudioMixerGroup audioMixerGroup, int volume)
+    {
+        float sliderValue = volume / 100f;
+
+        float dBVolume = Mathf.Log10(Mathf.Clamp(sliderValue, 0.0001f, 1f)) * 20;
+
+        audioMixer.SetFloat(audioMixerGroup.name, dBVolume);
+    }
+
     public void SaveSettingsFromUI()
     {
         if (PlayerSettings.instance == null) return;
@@ -49,14 +67,20 @@ public class SettingsMenuManager : MonoBehaviour
     }
     public void OnMusicSliderChanged()
     {
+        int musicSliderValue = Mathf.RoundToInt(musicSlider.value);
         if (musicValueText != null)
-            musicValueText.text = Mathf.RoundToInt(musicSlider.value).ToString();
+            musicValueText.text = musicSliderValue.ToString();
+        
+        setAudioMixerGroupVolume(musicMixerGroup, musicSliderValue);
     }
 
     public void OnSoundSliderChanged()
     {
+        int soundsSliderValue = Mathf.RoundToInt(soundSlider.value);
         if (soundValueText != null)
-            soundValueText.text = Mathf.RoundToInt(soundSlider.value).ToString();
+            soundValueText.text = soundsSliderValue.ToString();
+
+        setAudioMixerGroupVolume(soundsMixerGroup, soundsSliderValue);
     }
 
     private void UpdateVolumeLabels()
