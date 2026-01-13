@@ -14,8 +14,10 @@ public class KeypadController : MonoBehaviour, IInteractable
     private AudioSource audioSource;
 
     void Awake()
-    {
-        keypadUiController = keypadCanvas.GetComponent<KeypadUiController>();
+    {   
+        if(keypadCanvas != null)
+            keypadUiController = keypadCanvas.GetComponent<KeypadUiController>();
+            
         audioSource = gameObject.GetComponent<AudioSource>();
     }
 

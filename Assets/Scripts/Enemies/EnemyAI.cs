@@ -85,7 +85,8 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        // --- ANIMATION LOGIC ---
+        if (currentState == EnemyState.GameOver) return;
+        // Handle animation state based on agent velocity
         if (anim != null) 
         {
             bool currentlyMoving = agent.velocity.magnitude > 0.1f && !agent.isStopped;
@@ -151,6 +152,8 @@ public class EnemyAI : MonoBehaviour
                 break;
             case EnemyState.Searching:
                 SearchBehavior();
+                break;
+            case EnemyState.GameOver: 
                 break;
         }
     }
@@ -315,6 +318,27 @@ public class EnemyAI : MonoBehaviour
             agent.SetDestination(lastKnownPosition); 
             searchTimer = 0f;
         }
+        
+        if (Vector3.Distance(transform.position, playerTarget.position) < 1.5f)
+        {
+            EndGame();
+        }
+    }
+
+    private void EndGame()
+    {
+        if (currentState == EnemyState.GameOver) return;
+
+        currentState = EnemyState.GameOver;
+
+        agent.isStopped = true;
+        agent.velocity = Vector3.zero;
+
+        if (anim != null) anim.SetBool("isWalking", false);
+
+        PlayerSingleton.instance.GetComponent<PlayerDeathHandler>().OnDeath();
+
+        //Debug.Log("Game Over");
     }
 
     private void SearchBehavior()
