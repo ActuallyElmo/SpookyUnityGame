@@ -13080,6 +13080,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 5049005614705147186, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
+      propertyPath: isLocked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5049005614705147186, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
+      propertyPath: neededKey
+      value: 
+      objectReference: {fileID: 888529859}
     - target: {fileID: 5117041491731517542, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -13710,7 +13718,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8604367122496853544, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8604409324610155446, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       propertyPath: m_Layer
@@ -22071,7 +22079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 115623514493f2b41bd72e3ecf3767aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neededKey: {fileID: 3019568616600317948}
+  neededKey: {fileID: 216677324}
   finalDoorController: {fileID: 1751436942}
 --- !u!54 &1952595611
 Rigidbody:
