@@ -85,7 +85,12 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        if (currentState == EnemyState.GameOver) return;
+        if (currentState == EnemyState.GameOver) 
+        {
+            anim.SetBool("isWalking", false);
+            anim.SetBool("isRunning", false);
+            return;
+        }
         // Handle animation state based on agent velocity
         if (anim != null) 
         {

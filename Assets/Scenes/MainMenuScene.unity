@@ -516,7 +516,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.1
   m_MinRegionArea: 3
   m_NavMeshData: {fileID: 23800000, guid: 185778a212db0a84ea2a50d431360173, type: 2}
   m_BuildHeightMesh: 0
@@ -3909,6 +3909,8 @@ MonoBehaviour:
     isNewSave: 1
     playerPosition: {x: 0, y: 0, z: 0}
     playerRotation: {x: 0, y: 0, z: 0}
+    enemyPosition: {x: 0, y: 0, z: 0}
+    enemyRotation: {x: 0, y: 0, z: 0}
     flashlightPosition: {x: 0, y: 0, z: 0}
     mapDoorStates: 
     mapLockerStates: 
@@ -6544,7 +6546,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e31d9f202a4cd1e4ca8e69b55e421d02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 5
   playerControls: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   actionMapName: Player
   interact: Interact
@@ -7771,7 +7772,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1507485417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7787,13 +7788,12 @@ MonoBehaviour:
   currentState: 0
   walkSpeed: 3.5
   runSpeed: 6
+  rotationSpeed: 600
   detectionRadius: 10
+  nearbySenseRadius: 3
   fieldOfViewAngle: 60
   eyeHeight: 1.5
   playerHeightOffset: 1
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 8
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 1
@@ -7810,9 +7810,7 @@ MonoBehaviour:
   searchDuration: 5
   doorInteractionRange: 1.5
   doorCheckInterval: 0.5
-  encounterCount: 0
-  rageMultiplier: 1.1
-  maxSpeedCap: 9
+  doorOpenWaitTime: 1.5
 --- !u!195 &1507485418
 NavMeshAgent:
   m_ObjectHideFlags: 0
