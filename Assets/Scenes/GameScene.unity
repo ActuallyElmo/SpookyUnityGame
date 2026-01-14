@@ -5288,6 +5288,7 @@ GameObject:
   - component: {fileID: 872992548}
   - component: {fileID: 872992549}
   - component: {fileID: 872992550}
+  - component: {fileID: 872992551}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -5512,6 +5513,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerIsDead: 0
   deathCameraParent: {fileID: 70929962}
+--- !u!114 &872992551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872992540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cdf4a18b0b701a4a8837aea1404c498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickUpRange: 1.5
 --- !u!1 &879359844
 GameObject:
   m_ObjectHideFlags: 0
