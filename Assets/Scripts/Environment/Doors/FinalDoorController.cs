@@ -14,13 +14,14 @@ public class FinalDoorController : MonoBehaviour, IInteractable
     private void checkDoorUnlock()
     {
         bool lockedCondition = isKeyLocked || isLockpadLocked || isKeypadLocked || (planksNumber > 0);
-
+        //lockedCondition = false;
         if (!lockedCondition)
         {
             Rigidbody rigidbody = GetComponent<Rigidbody>();
             rigidbody.isKinematic = false;
             rigidbody.useGravity = true;
             rigidbody.AddForce(0f, 0f, -5f, ForceMode.Impulse);
+            PlayerSingleton.instance.GetComponent<PlayerDeathHandler>().OnWin();
         }
     }
 
@@ -54,6 +55,7 @@ public class FinalDoorController : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        checkDoorUnlock();
         if (!masterKey.isHeld)
         {
             StartCoroutine(IInteractable.DisplayLockedMessage(noKeyMessage));

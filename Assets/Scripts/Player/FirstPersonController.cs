@@ -53,6 +53,11 @@ public class FirstPersonController : MonoBehaviour
         {
             return;
         }
+        if(playerInputHandler.MenuTriggered)
+        {
+            GameSceneManager.instance.ToggleMenu();
+            playerInputHandler.ResetMenuTrigger();
+        }
         HandleCrouching();
         HandleMovement();
         HandleRotation();

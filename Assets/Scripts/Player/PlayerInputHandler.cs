@@ -13,6 +13,7 @@ public class PlayerInputHandler : MonoBehaviour
     private InputAction crouchAction;
     private InputAction interactAction;
     private InputAction dropAction;
+    private InputAction menuAction;
 
 
     // Public properties accessed by controller scripts
@@ -22,7 +23,8 @@ public class PlayerInputHandler : MonoBehaviour
     public bool SprintTriggered { get; private set; }            // True while sprint is pressed
     public bool CrouchTriggered { get; private set; }            // True while crouch is pressed
     public bool InteractTriggered { get; private set; }           
-    public bool DropTriggered { get; private set; }             
+    public bool DropTriggered { get; private set; }      
+    public bool MenuTriggered { get; private set; }          
 
 
     private void Awake()
@@ -38,6 +40,7 @@ public class PlayerInputHandler : MonoBehaviour
         crouchAction = playerControls.Player.Crouch;
         interactAction = playerControls.Player.Interact;
         dropAction = playerControls.Player.Drop;
+        menuAction = playerControls.Player.Menu;
 
         // Initialize triggers
         InteractTriggered = false;
@@ -70,6 +73,13 @@ public class PlayerInputHandler : MonoBehaviour
 
         dropAction.performed += ctx => DropTriggered = true;
         dropAction.canceled += ctx => DropTriggered = false;
+
+        menuAction.performed += ctx => MenuTriggered = !MenuTriggered;
+    }
+
+    public void ResetMenuTrigger()
+    {
+        MenuTriggered = false;
     }
 
     private void OnEnable()

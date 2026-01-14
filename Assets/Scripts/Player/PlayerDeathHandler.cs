@@ -13,4 +13,12 @@ public class PlayerDeathHandler : MonoBehaviour
         GetComponent<PlayerSoundManager>().enabled = false;
         GameSceneManager.instance.OnDeath();
     }
+
+    public void OnWin()
+    {
+        playerIsDead = true;
+        GetComponent<FirstPersonController>().enabled = false;
+        GetComponent<PlayerSoundManager>().enabled = false;
+        GameSceneManager.instance.OnWin();
+    }
 }

@@ -4,12 +4,16 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
 
 public class GameSceneManager : MonoBehaviour
 {
     public GameObject deathScreen;
+    public GameObject winScreen;
+    public GameObject menu;
     public Animator fadeElemAnim;
     public static GameSceneManager instance;
+    public Volume menuBlurVolume;
 
     public GameObject enemy;
     public GameObject flashLight;
@@ -201,6 +205,21 @@ public class GameSceneManager : MonoBehaviour
         Cursor.visible = true;
     }
 
+    public void OnWin()
+    {
+        StartCoroutine(WinAnimation());
+    }
+
+    IEnumerator WinAnimation()
+    {
+        yield return new WaitForEndOfFrame();
+        fadeElemAnim.gameObject.SetActive(true);
+        fadeElemAnim.SetTrigger("FadeIn");
+        winScreen.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
     public void LoadLastCheckpoint()
     {
         StartCoroutine(LoadGameScene());
@@ -234,5 +253,36 @@ public class GameSceneManager : MonoBehaviour
             yield return null;
         }
         Destroy(this.gameObject);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void ToggleMenu()
+    {
+        bool isOpening = !menu.activeSelf;
+
+        if (isOpening)
+        {
+            // Open Menu
+            menu.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            // Enable Blur (Weight 1 = Full effect)
+            if (menuBlurVolume != null) menuBlurVolume.weight = 1f;
+        }
+        else
+        {
+            // Close Menu
+            menu.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            // Disable Blur (Weight 0 = No effect, reverts to normal game look)
+            if (menuBlurVolume != null) menuBlurVolume.weight = 0f;
+        }
     }
 }
