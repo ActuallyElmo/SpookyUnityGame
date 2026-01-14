@@ -1,12 +1,7 @@
-# Nume Joc Placeholder
+# Not Alone Here
 
-## Descriere
-Acest proiect este un **joc de tip Granny**, în care jucătorul se poate deplasa liber, poate explora mediul și se poate ascunde de inamic.
+**Not Alone Here** is a *First-Person Survival Horror* game, inspired by titles like *Granny*. The player explores a house, must avoid a dangerous monster, find hidden items, and solve puzzles to escape.  
 
-## Cum se rulează
-1. Deschide proiectul în **Unity**.  
-2. Deschide scena **Scene** din folderul **Scenes**.  
-3. Apasă **Play (▶️)** pentru a rula jocul.  
+The main door is blocked by wooden planks, a padlock, and a numeric keypad, and each obstacle must be overcome using the objects found and the player's logic. The game combines exploration, survival, and stealth elements, creating a tense and engaging experience.  
 
-## Modalitate de primire a raportului de recenzie
-**e-mail**: mariuseco15@yahoo.com
+The ultimate goal is to survive and escape the house without being caught by the enemy.
